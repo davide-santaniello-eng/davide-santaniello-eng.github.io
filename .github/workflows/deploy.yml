@@ -37,6 +37,7 @@ jobs:
 
       - name: Build Quartz
         run: |
+          mkdir -p dist/notes
           cd notes
           npx quartz build --output ../dist/notes
 
