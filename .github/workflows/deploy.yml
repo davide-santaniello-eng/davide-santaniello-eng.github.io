@@ -22,10 +22,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install Portfolio Dependencies
-        run: npm install
+        run: npm install --no-package-lock
 
       - name: Build Portfolio
         run: npm run build
@@ -33,7 +33,7 @@ jobs:
       - name: Install Quartz Dependencies
         run: |
           cd notes
-          npm install
+          npm install --no-package-lock
 
       - name: Build Quartz
         run: |
