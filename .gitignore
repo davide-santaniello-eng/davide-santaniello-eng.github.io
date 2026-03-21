@@ -1,10 +1,12 @@
 # build output
 dist/
-# generated types
 .astro/
+notes/public/
 
 # dependencies
 node_modules/
+notes/node_modules/
+notes/.quartz-cache/
 
 # logs
 npm-debug.log*
