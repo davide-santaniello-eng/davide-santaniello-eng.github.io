@@ -1,5 +1,5 @@
 ---
-const pageTitle = "Davide Santaniello | Engineering Portfolio";
+const pageTitle = "Davide Santaniello | Engineering Second Brain";
 ---
 
 <html lang="it">
@@ -90,6 +90,21 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				margin: 1.5rem 0 2.5rem 0;
 			}
 
+			.cursor {
+				display: inline-block;
+				width: 10px;
+				height: 1.2rem;
+				background-color: var(--primary-light);
+				margin-left: 5px;
+				animation: blink 1s step-end infinite;
+				vertical-align: middle;
+			}
+
+			@keyframes blink {
+				from, to { opacity: 1; }
+				50% { opacity: 0; }
+			}
+
 			.grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -136,7 +151,6 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				margin-bottom: 1.5rem;
 			}
 
-			/* Layout per la sezione Chi Sono con Foto */
 			.about-wrapper {
 				display: flex;
 				gap: 2.5rem;
@@ -147,7 +161,7 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				flex-shrink: 0;
 				width: 180px;
 				height: 180px;
-				background: #e0e0e0; /* Placeholder color */
+				background: #e0e0e0;
 				border-radius: 20px;
 				border: 4px solid white;
 				box-shadow: 0 8px 20px rgba(0,0,0,0.1);
@@ -159,12 +173,6 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				font-size: 0.8rem;
 				text-align: center;
 				padding: 1rem;
-			}
-
-			.profile-photo img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
 			}
 
 			.about-text {
@@ -257,30 +265,28 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 		<section class="hero">
 			<span class="badge">Studente di Ingegneria</span>
 			<h1>Davide Santaniello</h1>
-			<p class="subtitle">> Building systems, designing solutions_</p>
+			<p class="subtitle">> Engineering my Second Brain<span class="cursor"></span></p>
 			
 			<div class="grid">
-				<!-- CARD VAULT -->
+				<!-- CARD SECOND BRAIN -->
 				<a href="/notes" class="card">
-					<h3>📚 Digital Garden</h3>
-					<p>Il mio archivio di appunti universitari. Organizzato, ricercabile e costantemente aggiornato. Dalla teoria dei segnali alla meccanica applicata.</p>
-					<span class="card-link">Sfoglia le note →</span>
+					<h3>🧠 Second Brain</h3>
+					<p>Il mio archivio dinamico di appunti universitari, progetti e connessioni logiche. Progettato per espandere la mente e ottimizzare l'apprendimento.</p>
+					<span class="card-link">Accedi al Sistema →</span>
 				</a>
 
 				<!-- CARD PROGETTI -->
 				<div class="card no-hover">
 					<h3>💻 Project Lab <span class="status-badge">In Arrivo</span></h3>
-					<p>Area dedicata ai miei progetti tecnici: simulazioni MATLAB, prototipi IoT e software engineering. Sto preparando la documentazione.</p>
-					<span style="color: #999; font-size: 0.9rem; font-style: italic;">Stay tuned...</span>
+					<p>Documentazione tecnica e repository di progetti IoT, simulazioni e software engineering. Attualmente in fase di allestimento.</p>
+					<span style="color: #999; font-size: 0.9rem; font-style: italic;">Processing...</span>
 				</div>
 
-				<!-- CARD CHI SONO (FULL WIDTH) CON FOTO -->
+				<!-- CARD CHI SONO (FULL WIDTH) -->
 				<div class="card no-hover full-width">
 					<div class="about-wrapper">
 						<div class="profile-photo">
-							<!-- Sostituisci 'me.jpg' con il nome della tua foto in public/ -->
 							<span>Foto Profilo<br>(me.jpg)</span>
-							<!-- <img src="/me.jpg" alt="Davide Santaniello" /> -->
 						</div>
 						
 						<div class="about-text">
