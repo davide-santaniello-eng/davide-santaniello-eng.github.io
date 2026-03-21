@@ -1,0 +1,77 @@
+---
+const pageTitle = "Davide Santaniello | Ingegneria";
+---
+
+<html lang="it">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle}</title>
+		<style>
+			:root {
+				--primary: #284b63;
+				--bg: #faf8f8;
+				--text: #2b2b2b;
+			}
+			body {
+				font-family: 'Schibsted Grotesk', sans-serif;
+				background-color: var(--bg);
+				color: var(--text);
+				margin: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+			}
+			.container {
+				text-align: center;
+				padding: 2rem;
+				max-width: 800px;
+			}
+			h1 {
+				font-size: 3rem;
+				color: var(--primary);
+				margin-bottom: 0.5rem;
+			}
+			p {
+				font-size: 1.2rem;
+				line-height: 1.6;
+				margin-bottom: 2rem;
+			}
+			.cta-container {
+				display: flex;
+				gap: 1rem;
+				justify-content: center;
+			}
+			.btn {
+				padding: 0.8rem 1.5rem;
+				border-radius: 8px;
+				text-decoration: none;
+				font-weight: bold;
+				transition: all 0.2s;
+			}
+			.btn-primary {
+				background-color: var(--primary);
+				color: white;
+			}
+			.btn-primary:hover {
+				opacity: 0.9;
+				transform: translateY(-2px);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Davide Santaniello</h1>
+			<p>Studente di Ingegneria & Tech Enthusiast</p>
+			<p>Benvenuto nel mio spazio digitale. Qui raccolgo i miei progetti, le mie esperienze e il mio archivio personale di appunti universitari.</p>
+			
+			<div class="cta-container">
+				<a href="/notes" class="btn btn-primary">📚 Esplora il mio Vault</a>
+				<a href="https://github.com/davide-santaniello-eng" class="btn">💻 GitHub</a>
+			</div>
+		</div>
+	</body>
+</html>
