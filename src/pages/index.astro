@@ -38,12 +38,12 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				padding: 1rem;
+				padding: 2rem 1rem;
 			}
 
 			.hero {
 				text-align: center;
-				max-width: 900px;
+				max-width: 1000px;
 				padding: 3rem 2rem;
 				background: var(--glass);
 				backdrop-filter: blur(10px);
@@ -65,6 +65,16 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				text-transform: uppercase;
 			}
 
+			.status-badge {
+				font-size: 0.7rem;
+				background: #ececec;
+				color: #666;
+				padding: 0.2rem 0.6rem;
+				border-radius: 4px;
+				vertical-align: middle;
+				margin-left: 8px;
+			}
+
 			h1 {
 				font-size: clamp(2.5rem, 8vw, 4rem);
 				font-weight: 700;
@@ -82,7 +92,7 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 
 			.grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 1.5rem;
 				width: 100%;
 				margin-top: 2rem;
@@ -101,23 +111,45 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				text-align: left;
 			}
 
-			.card:hover {
+			.card:not(.no-hover):hover {
 				transform: translateY(-8px);
 				border-color: var(--primary);
 				box-shadow: 0 15px 30px rgba(40, 75, 99, 0.1);
 			}
 
 			.card h3 {
-				margin: 0 0 0.5rem 0;
+				margin: 0 0 1rem 0;
 				color: var(--primary);
 				font-size: 1.4rem;
+				display: flex;
+				align-items: center;
 			}
 
 			.card p {
 				font-size: 0.95rem;
-				line-height: 1.5;
-				color: #666;
+				line-height: 1.6;
+				color: #555;
 				margin-bottom: 1.5rem;
+			}
+
+			.social-links {
+				display: flex;
+				gap: 1rem;
+				margin-top: auto;
+			}
+
+			.social-link {
+				color: var(--primary);
+				font-weight: 600;
+				text-decoration: none;
+				font-size: 0.9rem;
+				padding: 0.5rem 0;
+				border-bottom: 2px solid transparent;
+				transition: border-color 0.2s;
+			}
+
+			.social-link:hover {
+				border-color: var(--primary);
 			}
 
 			.card-link {
@@ -144,31 +176,38 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 		<section class="hero">
 			<span class="badge">Studente di Ingegneria</span>
 			<h1>Davide Santaniello</h1>
-			<p class="subtitle">> Engineering the future, one note at a time_</p>
+			<p class="subtitle">> Building systems, designing solutions_</p>
 			
 			<div class="grid">
+				<!-- CARD VAULT -->
 				<a href="/notes" class="card">
 					<h3>📚 Digital Garden</h3>
-					<p>Il mio vault personale con appunti universitari, formule e guide tecniche, tutto in Markdown.</p>
-					<span class="card-link">Esplora il Vault →</span>
+					<p>Il mio archivio di appunti universitari. Organizzato, ricercabile e costantemente aggiornato. Dalla teoria dei segnali alla meccanica applicata.</p>
+					<span class="card-link">Sfoglia le note →</span>
 				</a>
 
-				<a href="https://github.com/davide-santaniello-eng" target="_blank" class="card">
-					<h3>💻 Progetti Git</h3>
-					<p>Codice, tool e sperimentazioni software. Dai uno sguardo ai miei repository pubblici su GitHub.</p>
-					<span class="card-link">Vai ai progetti →</span>
-				</a>
+				<!-- CARD PROGETTI -->
+				<div class="card no-hover">
+					<h3>💻 Project Lab <span class="status-badge">In Arrivo</span></h3>
+					<p>Area dedicata ai miei progetti tecnici: simulazioni MATLAB, prototipi IoT e software engineering. Sto preparando la documentazione.</p>
+					<span style="color: #999; font-size: 0.9rem; font-style: italic;">Stay tuned...</span>
+				</div>
 
-				<a href="mailto:davidesantaniello.scuola@gmail.com" class="card">
-					<h3>✉️ Contatti</h3>
-					<p>Se vuoi collaborare a un progetto o semplicemente scambiare due chiacchiere tecniche, scrivimi!</p>
-					<span class="card-link">Manda un'email →</span>
-				</a>
+				<!-- CARD CHI SONO -->
+				<div class="card no-hover">
+					<h3>👤 Chi Sono</h3>
+					<p>Studente di ingegneria appassionato di tecnologia e innovazione. Mi piace approfondire il funzionamento dei sistemi complessi e sviluppare soluzioni creative.</p>
+					<div class="social-links">
+						<a href="mailto:davidesantaniello.scuola@gmail.com" class="social-link">Email</a>
+						<a href="https://github.com/davide-santaniello-eng" target="_blank" class="social-link">GitHub</a>
+						<a href="#" class="social-link">LinkedIn</a>
+					</div>
+				</div>
 			</div>
 		</section>
 
 		<footer>
-			&copy; 2026 Davide Santaniello — Costruito con Astro & Quartz
+			&copy; 2026 Davide Santaniello — Built with Astro & Quartz
 		</footer>
 	</body>
 </html>
