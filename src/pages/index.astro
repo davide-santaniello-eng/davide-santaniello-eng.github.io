@@ -136,18 +136,53 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				margin-bottom: 1.5rem;
 			}
 
-			.about-content {
+			/* Layout per la sezione Chi Sono con Foto */
+			.about-wrapper {
+				display: flex;
+				gap: 2.5rem;
+				align-items: flex-start;
+			}
+
+			.profile-photo {
+				flex-shrink: 0;
+				width: 180px;
+				height: 180px;
+				background: #e0e0e0; /* Placeholder color */
+				border-radius: 20px;
+				border: 4px solid white;
+				box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+				overflow: hidden;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #999;
+				font-size: 0.8rem;
+				text-align: center;
+				padding: 1rem;
+			}
+
+			.profile-photo img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.about-text {
+				flex-grow: 1;
+			}
+
+			.about-footer {
 				display: flex;
 				justify-content: space-between;
-				align-items: flex-end;
+				align-items: center;
 				gap: 2rem;
 				flex-wrap: wrap;
+				margin-top: 1rem;
 			}
 
 			.social-links {
 				display: flex;
 				gap: 1.5rem;
-				margin-top: 1rem;
 			}
 
 			.social-link {
@@ -202,9 +237,18 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				.card.full-width {
 					grid-column: auto;
 				}
-				.about-content {
+				.about-wrapper {
 					flex-direction: column;
-					align-items: flex-start;
+					align-items: center;
+					text-align: center;
+					gap: 1.5rem;
+				}
+				.about-footer {
+					flex-direction: column;
+					gap: 1.5rem;
+				}
+				.social-links {
+					justify-content: center;
 				}
 			}
 		</style>
@@ -230,21 +274,31 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 					<span style="color: #999; font-size: 0.9rem; font-style: italic;">Stay tuned...</span>
 				</div>
 
-				<!-- CARD CHI SONO (FULL WIDTH) -->
+				<!-- CARD CHI SONO (FULL WIDTH) CON FOTO -->
 				<div class="card no-hover full-width">
-					<h3>👤 Chi Sono</h3>
-					<p>Studente di ingegneria appassionato di tecnologia e innovazione. Mi piace approfondire il funzionamento dei sistemi complessi e sviluppare soluzioni creative. Attualmente focalizzato sull'integrazione tra hardware e software nel mondo dell'automazione.</p>
-					
-					<div class="about-content">
-						<div class="social-links">
-							<a href="mailto:davidesantaniello.scuola@gmail.com" class="social-link">Email</a>
-							<a href="https://github.com/davide-santaniello-eng" target="_blank" class="social-link">GitHub</a>
-							<a href="#" class="social-link">LinkedIn</a>
+					<div class="about-wrapper">
+						<div class="profile-photo">
+							<!-- Sostituisci 'me.jpg' con il nome della tua foto in public/ -->
+							<span>Foto Profilo<br>(me.jpg)</span>
+							<!-- <img src="/me.jpg" alt="Davide Santaniello" /> -->
 						</div>
 						
-						<a href="/cv.pdf" download class="cv-button">
-							📄 Scarica CV (PDF)
-						</a>
+						<div class="about-text">
+							<h3>👤 Chi Sono</h3>
+							<p>Studente di ingegneria appassionato di tecnologia e innovazione. Mi piace approfondire il funzionamento dei sistemi complessi e sviluppare soluzioni creative. Attualmente focalizzato sull'integrazione tra hardware e software nel mondo dell'automazione.</p>
+							
+							<div class="about-footer">
+								<div class="social-links">
+									<a href="mailto:davidesantaniello.scuola@gmail.com" class="social-link">Email</a>
+									<a href="https://github.com/davide-santaniello-eng" target="_blank" class="social-link">GitHub</a>
+									<a href="#" class="social-link">LinkedIn</a>
+								</div>
+								
+								<a href="/cv.pdf" download class="cv-button">
+									📄 Scarica CV (PDF)
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
