@@ -1,5 +1,5 @@
 ---
-const pageTitle = "Davide Santaniello | Ingegneria";
+const pageTitle = "Davide Santaniello | Engineering Portfolio";
 ---
 
 <html lang="it">
@@ -9,69 +9,166 @@ const pageTitle = "Davide Santaniello | Ingegneria";
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
 		<style>
 			:root {
 				--primary: #284b63;
-				--bg: #faf8f8;
-				--text: #2b2b2b;
+				--primary-light: #3c6e71;
+				--accent: #d9d9d9;
+				--bg: #ffffff;
+				--text: #353535;
+				--glass: rgba(255, 255, 255, 0.8);
 			}
+
+			* { box-sizing: border-box; }
+
 			body {
-				font-family: 'Schibsted Grotesk', sans-serif;
+				font-family: 'Inter', sans-serif;
 				background-color: var(--bg);
+				background-image: 
+					linear-gradient(rgba(40, 75, 99, 0.05) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(40, 75, 99, 0.05) 1px, transparent 1px);
+				background-size: 30px 30px;
 				color: var(--text);
 				margin: 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
 				min-height: 100vh;
-			}
-			.container {
-				text-align: center;
-				padding: 2rem;
-				max-width: 800px;
-			}
-			h1 {
-				font-size: 3rem;
-				color: var(--primary);
-				margin-bottom: 0.5rem;
-			}
-			p {
-				font-size: 1.2rem;
-				line-height: 1.6;
-				margin-bottom: 2rem;
-			}
-			.cta-container {
 				display: flex;
-				gap: 1rem;
+				flex-direction: column;
+				align-items: center;
 				justify-content: center;
+				padding: 1rem;
 			}
-			.btn {
-				padding: 0.8rem 1.5rem;
-				border-radius: 8px;
-				text-decoration: none;
-				font-weight: bold;
-				transition: all 0.2s;
+
+			.hero {
+				text-align: center;
+				max-width: 900px;
+				padding: 3rem 2rem;
+				background: var(--glass);
+				backdrop-filter: blur(10px);
+				border: 1px solid rgba(40, 75, 99, 0.1);
+				border-radius: 24px;
+				box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 			}
-			.btn-primary {
-				background-color: var(--primary);
+
+			.badge {
+				display: inline-block;
+				background: var(--primary);
 				color: white;
+				padding: 0.4rem 1rem;
+				border-radius: 50px;
+				font-size: 0.8rem;
+				font-weight: bold;
+				letter-spacing: 1px;
+				margin-bottom: 1.5rem;
+				text-transform: uppercase;
 			}
-			.btn-primary:hover {
-				opacity: 0.9;
-				transform: translateY(-2px);
+
+			h1 {
+				font-size: clamp(2.5rem, 8vw, 4rem);
+				font-weight: 700;
+				color: var(--primary);
+				margin: 0;
+				line-height: 1.1;
+			}
+
+			.subtitle {
+				font-family: 'Fira Code', monospace;
+				font-size: 1.1rem;
+				color: var(--primary-light);
+				margin: 1.5rem 0 2.5rem 0;
+			}
+
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 1.5rem;
+				width: 100%;
+				margin-top: 2rem;
+			}
+
+			.card {
+				background: white;
+				padding: 2rem;
+				border-radius: 16px;
+				border: 1px solid rgba(0,0,0,0.05);
+				text-decoration: none;
+				color: inherit;
+				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+				display: flex;
+				flex-direction: column;
+				text-align: left;
+			}
+
+			.card:hover {
+				transform: translateY(-8px);
+				border-color: var(--primary);
+				box-shadow: 0 15px 30px rgba(40, 75, 99, 0.1);
+			}
+
+			.card h3 {
+				margin: 0 0 0.5rem 0;
+				color: var(--primary);
+				font-size: 1.4rem;
+			}
+
+			.card p {
+				font-size: 0.95rem;
+				line-height: 1.5;
+				color: #666;
+				margin-bottom: 1.5rem;
+			}
+
+			.card-link {
+				margin-top: auto;
+				font-weight: bold;
+				color: var(--primary);
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+			}
+
+			footer {
+				margin-top: 4rem;
+				font-size: 0.9rem;
+				color: #999;
+			}
+
+			@media (max-width: 600px) {
+				.hero { padding: 2rem 1rem; }
 			}
 		</style>
 	</head>
 	<body>
-		<div class="container">
+		<section class="hero">
+			<span class="badge">Studente di Ingegneria</span>
 			<h1>Davide Santaniello</h1>
-			<p>Studente di Ingegneria & Tech Enthusiast</p>
-			<p>Benvenuto nel mio spazio digitale. Qui raccolgo i miei progetti, le mie esperienze e il mio archivio personale di appunti universitari.</p>
+			<p class="subtitle">> Engineering the future, one note at a time_</p>
 			
-			<div class="cta-container">
-				<a href="/notes" class="btn btn-primary">📚 Esplora il mio Vault</a>
-				<a href="https://github.com/davide-santaniello-eng" class="btn">💻 GitHub</a>
+			<div class="grid">
+				<a href="/notes" class="card">
+					<h3>📚 Digital Garden</h3>
+					<p>Il mio vault personale con appunti universitari, formule e guide tecniche, tutto in Markdown.</p>
+					<span class="card-link">Esplora il Vault →</span>
+				</a>
+
+				<a href="https://github.com/davide-santaniello-eng" target="_blank" class="card">
+					<h3>💻 Progetti Git</h3>
+					<p>Codice, tool e sperimentazioni software. Dai uno sguardo ai miei repository pubblici su GitHub.</p>
+					<span class="card-link">Vai ai progetti →</span>
+				</a>
+
+				<a href="mailto:davidesantaniello.scuola@gmail.com" class="card">
+					<h3>✉️ Contatti</h3>
+					<p>Se vuoi collaborare a un progetto o semplicemente scambiare due chiacchiere tecniche, scrivimi!</p>
+					<span class="card-link">Manda un'email →</span>
+				</a>
 			</div>
-		</div>
+		</section>
+
+		<footer>
+			&copy; 2026 Davide Santaniello — Costruito con Astro & Quartz
+		</footer>
 	</body>
 </html>
