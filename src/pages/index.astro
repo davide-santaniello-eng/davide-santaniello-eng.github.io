@@ -117,6 +117,10 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				box-shadow: 0 15px 30px rgba(40, 75, 99, 0.1);
 			}
 
+			.card.full-width {
+				grid-column: 1 / -1;
+			}
+
 			.card h3 {
 				margin: 0 0 1rem 0;
 				color: var(--primary);
@@ -132,10 +136,18 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				margin-bottom: 1.5rem;
 			}
 
+			.about-content {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-end;
+				gap: 2rem;
+				flex-wrap: wrap;
+			}
+
 			.social-links {
 				display: flex;
-				gap: 1rem;
-				margin-top: auto;
+				gap: 1.5rem;
+				margin-top: 1rem;
 			}
 
 			.social-link {
@@ -150,6 +162,25 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 
 			.social-link:hover {
 				border-color: var(--primary);
+			}
+
+			.cv-button {
+				background-color: var(--primary);
+				color: white;
+				padding: 0.8rem 1.5rem;
+				border-radius: 8px;
+				text-decoration: none;
+				font-weight: bold;
+				font-size: 0.9rem;
+				transition: all 0.2s;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+			}
+
+			.cv-button:hover {
+				background-color: var(--primary-light);
+				transform: scale(1.05);
 			}
 
 			.card-link {
@@ -167,8 +198,14 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 				color: #999;
 			}
 
-			@media (max-width: 600px) {
-				.hero { padding: 2rem 1rem; }
+			@media (max-width: 768px) {
+				.card.full-width {
+					grid-column: auto;
+				}
+				.about-content {
+					flex-direction: column;
+					align-items: flex-start;
+				}
 			}
 		</style>
 	</head>
@@ -193,14 +230,21 @@ const pageTitle = "Davide Santaniello | Engineering Portfolio";
 					<span style="color: #999; font-size: 0.9rem; font-style: italic;">Stay tuned...</span>
 				</div>
 
-				<!-- CARD CHI SONO -->
-				<div class="card no-hover">
+				<!-- CARD CHI SONO (FULL WIDTH) -->
+				<div class="card no-hover full-width">
 					<h3>👤 Chi Sono</h3>
-					<p>Studente di ingegneria appassionato di tecnologia e innovazione. Mi piace approfondire il funzionamento dei sistemi complessi e sviluppare soluzioni creative.</p>
-					<div class="social-links">
-						<a href="mailto:davidesantaniello.scuola@gmail.com" class="social-link">Email</a>
-						<a href="https://github.com/davide-santaniello-eng" target="_blank" class="social-link">GitHub</a>
-						<a href="#" class="social-link">LinkedIn</a>
+					<p>Studente di ingegneria appassionato di tecnologia e innovazione. Mi piace approfondire il funzionamento dei sistemi complessi e sviluppare soluzioni creative. Attualmente focalizzato sull'integrazione tra hardware e software nel mondo dell'automazione.</p>
+					
+					<div class="about-content">
+						<div class="social-links">
+							<a href="mailto:davidesantaniello.scuola@gmail.com" class="social-link">Email</a>
+							<a href="https://github.com/davide-santaniello-eng" target="_blank" class="social-link">GitHub</a>
+							<a href="#" class="social-link">LinkedIn</a>
+						</div>
+						
+						<a href="/cv.pdf" download class="cv-button">
+							📄 Scarica CV (PDF)
+						</a>
 					</div>
 				</div>
 			</div>
