@@ -52,6 +52,14 @@ const pageTitle = "DS-LAB | Davide Santaniello Management Engineering";
 				box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 			}
 
+			.badges {
+				display: flex;
+				justify-content: center;
+				gap: 10px;
+				flex-wrap: wrap;
+				margin-bottom: 1.5rem;
+			}
+
 			.badge {
 				display: inline-block;
 				background: var(--primary);
@@ -61,7 +69,6 @@ const pageTitle = "DS-LAB | Davide Santaniello Management Engineering";
 				font-size: 0.8rem;
 				font-weight: bold;
 				letter-spacing: 2px;
-				margin-bottom: 1.5rem;
 				text-transform: uppercase;
 			}
 
@@ -285,7 +292,10 @@ const pageTitle = "DS-LAB | Davide Santaniello Management Engineering";
 	</head>
 	<body>
 		<section class="hero">
-			<span class="badge">Digital Hub</span>
+			<div class="badges">
+				<span class="badge">Digital Hub</span>
+				<span class="badge" style="background: var(--primary-light);">Interactive Macro</span>
+			</div>
 			<h1>DS-LAB</h1>
 			<p class="subtitle">> Optimizing knowledge, engineering systems<span class="cursor"></span></p>
 			
@@ -295,6 +305,13 @@ const pageTitle = "DS-LAB | Davide Santaniello Management Engineering";
 					<h3>🧠 Second Brain</h3>
 					<p>Il mio archivio dinamico di appunti universitari, modelli gestionali e analisi dei processi. Progettato per ottimizzare l'apprendimento strategico.</p>
 					<span class="card-link">Accedi al Sistema →</span>
+				</a>
+
+				<!-- CARD MACROECONOMIA -->
+				<a href="/macro" class="card">
+					<h3>📈 Macro Sim <span class="status-badge" style="background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb;">Interattivo</span></h3>
+					<p>Simulatori avanzati per mappare modelli economici: IS-LM, Mundell-Fleming e AD-AS. Visualizza graficamente l'impatto delle politiche fiscali e monetarie.</p>
+					<span class="card-link">Accedi ai Simulatori →</span>
 				</a>
 
 				<!-- CARD PROGETTI -->

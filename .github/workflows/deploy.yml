@@ -30,16 +30,19 @@ jobs:
       - name: Build Portfolio
         run: npm run build
 
-      - name: Install Quartz Dependencies
-        run: |
-          cd notes
-          npm install --no-package-lock
-
-      - name: Build Quartz
+      - name: Build Quartz (Notes)
         run: |
           mkdir -p dist/notes
           cd notes
+          npm install --no-package-lock
           npx quartz build --output ../dist/notes
+
+      - name: Build Quartz (Macro)
+        run: |
+          mkdir -p dist/macro
+          cd macro
+          npm install --no-package-lock
+          npx quartz build --output ../dist/macro
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
