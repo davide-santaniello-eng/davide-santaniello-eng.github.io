@@ -1,6 +1,6 @@
 # Simulatore di Macroeconomia Interattivo
 
-Benvenuto nel portale dei simulatori di Macroeconomia. Questi strumenti interattivi ti permetteranno di visualizzare graficamente l'impatto delle politiche economiche e degli shock sui principali modelli macroeconomici, dal breve al medio periodo.
+Ho pensato che questi simulatori interattivi potessero essere uno strumento utile per comprendere meglio il funzionamento dei modelli macroeconomici. È un supporto funzionale allo studio, ideato per visualizzare graficamente come le variabili e le politiche economiche interagiscono tra loro.
 
 Di seguito trovi i simulatori ordinati per complessità crescente:
 
