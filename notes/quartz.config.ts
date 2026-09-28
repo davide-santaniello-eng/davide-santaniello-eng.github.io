@@ -13,7 +13,8 @@ const config: QuartzConfig = {
     enableSPA: true,
     enablePopovers: true,
     analytics: {
-      provider: "plausible",
+      provider: "google",
+      tagId: "G-GB75HHK6YM",
     },
     locale: "it-IT",
     baseUrl: "davide-santaniello-eng.github.io/notes",
