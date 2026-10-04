@@ -310,7 +310,7 @@ const pageTitle = "DS-LAB | Davide Santaniello Management Engineering";
 			
 			<div class="grid">
 				<!-- CARD SECOND BRAIN -->
-				<a href="#" onclick="checkPassword(event)" class="card">
+				<a href="#" onclick="checkPassword(event, '/notes', 'Second Brain')" class="card">
 					<h3>🧠 Second Brain</h3>
 					<p>Archivio personale di appunti universitari. L'accesso è limitato e richiede l'inserimento di una password.</p>
 					<span class="card-link">Accedi al Sistema →</span>
@@ -331,9 +331,9 @@ const pageTitle = "DS-LAB | Davide Santaniello Management Engineering";
 				</a>
 
 				<!-- CARD PROGETTI -->
-				<a href="/schede" class="card">
+				<a href="#" onclick="checkPassword(event, '/schede', 'Fire Resistance App')" class="card">
 					<h3>🔥 Fire Resistance App</h3>
-					<p>Calcolatore per la resistenza al fuoco del cartongesso. Strumento interattivo per il dimensionamento e la verifica dei requisiti normativi.</p>
+					<p>Calcolatore per la resistenza al fuoco del cartongesso. L'accesso è protetto da password.</p>
 					<span class="card-link">Avvia Calcolatore →</span>
 				</a>
 
@@ -373,12 +373,11 @@ const pageTitle = "DS-LAB | Davide Santaniello Management Engineering";
 		</footer>
 
 		<script is:inline>
-			function checkPassword(e) {
+			function checkPassword(e, targetUrl, targetName) {
 				e.preventDefault();
-				const pwd = prompt("Inserisci la password per accedere al Second Brain:");
-				// Sostituisci 'ds2026' con la password che preferisci!
+				const pwd = prompt("Inserisci la password per accedere a " + targetName + ":");
 				if (pwd === "ds2026") {
-					window.location.href = "/notes";
+					window.location.href = targetUrl;
 				} else if (pwd !== null) {
 					alert("Accesso negato. Password errata.");
 				}
