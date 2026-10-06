@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="200" height="300">
+  <defs>
+    <marker id="arrow-start2" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M9,0 L0,3 L9,6 z" fill="#284B63" />
+    </marker>
+    <marker id="arrow-end2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 z" fill="#284B63" />
+    </marker>
+  </defs>
+
+  <g stroke="#cbd5e1" stroke-width="2" fill="#e2e8f0">
+    <!-- Studs -->
+    <rect x="80" y="50" width="10" height="200" />
+    <rect x="120" y="50" width="10" height="200" />
+  </g>
+
+  <g stroke="#284B63" stroke-width="1.5" fill="#f1f5f9">
+    <!-- Drywall sheets -->
+    <rect x="90" y="50" width="15" height="200" />
+    <rect x="105" y="50" width="15" height="200" />
+    <rect x="130" y="50" width="15" height="200" />
+  </g>
+
+  <g stroke="#284B63" stroke-width="1" fill="none">
+    <!-- B measure -->
+    <line x1="50" y1="100" x2="50" y2="150" marker-start="url(#arrow-start2)" marker-end="url(#arrow-end2)" />
+    <line x1="40" y1="100" x2="90" y2="100" />
+    <line x1="40" y1="150" x2="90" y2="150" />
+    
+    <line x1="50" y1="150" x2="50" y2="200" marker-start="url(#arrow-start2)" marker-end="url(#arrow-end2)" />
+    <line x1="40" y1="200" x2="90" y2="200" />
+  </g>
+
+  <g font-family="sans-serif" font-weight="bold" font-size="16" fill="#284B63">
+    <text x="30" y="130">B</text>
+    <text x="30" y="180">B</text>
+    <text x="100" y="270">S=3</text>
+  </g>
+</svg>
