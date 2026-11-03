@@ -750,7 +750,7 @@
     </footer>
   </div>
 
-  <script>
+  <script is:inline>
     const COURSES_DATA = {
       "SM": {
         "id": "SM",
@@ -1208,8 +1208,12 @@
     const SUPABASE_KEY = 'sb_publishable_8GZ9RM14uxyfkSW-2cI64w_AbwmqE06';
     let supabaseClient = null;
 
-    if (window.supabase && typeof window.supabase.createClient === 'function') {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    function getSupabaseClient() {
+      if (supabaseClient) return supabaseClient;
+      if (window.supabase && typeof window.supabase.createClient === 'function') {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+      return supabaseClient;
     }
 
     function setCloudStatus(status, text) {
@@ -1255,14 +1259,22 @@
       return new Set(JSON.parse(localStorage.getItem(getStorageKey()) || '[]'));
     }
 
-    async function syncFromCloud(courseId) {
-      if (!supabaseClient) {
+    async function syncFromCloud(courseId, retryCount = 0) {
+      const sb = getSupabaseClient();
+      if (!sb) {
+        if (retryCount < 4) {
+          setTimeout(() => syncFromCloud(courseId, retryCount + 1), 400);
+          return;
+        }
+        setCloudStatus('error', 'Offline / CDN in attesa');
+        return;
+      }
         setCloudStatus('error', 'Offline');
         return;
       }
       setCloudStatus('syncing', 'Controllo cloud...');
       try {
-        const { data, error } = await supabaseClient
+        const { data, error } = await sb
           .from('study_progress')
           .select('*')
           .eq('course_id', courseId)
@@ -1313,7 +1325,8 @@
     }
 
     async function syncToCloud(courseId, completedList, targetDate) {
-      if (!supabaseClient) {
+      const sb = getSupabaseClient();
+      if (!sb) {
         setCloudStatus('error', 'Offline');
         return;
       }
@@ -1325,7 +1338,7 @@
           target_date: targetDate !== undefined ? targetDate : (localStorage.getItem(getTargetDateKey()) || ''),
           updated_at: new Date().toISOString()
         };
-        const { error } = await supabaseClient
+        const { error } = await sb
           .from('study_progress')
           .upsert(payload, { onConflict: 'course_id' });
 
@@ -1627,9 +1640,20 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    window.switchCourse = switchCourse;
+    window.toggleLesson = toggleLesson;
+    window.setFilter = setFilter;
+    window.calculatePace = calculatePace;
+    window.exportState = exportState;
+    window.resetState = resetState;
+    window.handleImportFile = handleImportFile;
+
+    // Inizializza subito le lezioni
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => switchCourse(currentCourseId));
+    } else {
       switchCourse(currentCourseId);
-    });
+    }
 
   </script>
 </body>
