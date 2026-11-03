@@ -1,14 +1,33 @@
 <!doctype html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/schede/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fire-resistance-app</title>
-    <script type="module" crossorigin src="/schede/assets/index-B5O7EXOx.js"></script>
-    <link rel="stylesheet" crossorigin href="/schede/assets/index-DOq8Ul1Z.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Fire Engineering Calculation Toolkit</title>
+    
+    <!-- PWA & Mobile Meta Tags -->
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Fire Toolkit" />
+    <meta name="description" content="Pre-dimensionamento e Computi di Cantiere Antincendio per Ingegneria Gestionale e Civile" />
+    
+    <link rel="apple-touch-icon" href="/schede/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/schede/manifest.webmanifest" />
+    <script type="module" crossorigin src="/schede/assets/index-DwEoB82G.js"></script>
+    <link rel="stylesheet" crossorigin href="/schede/assets/index-CLU4fAVF.css">
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/schede/sw.js', { scope: '/schede/' })
+            .catch((err) => console.warn('PWA SW non registrato:', err));
+        });
+      }
+    </script>
   </body>
 </html>

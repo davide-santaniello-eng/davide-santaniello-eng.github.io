@@ -1,0 +1,32 @@
+{
+  "name": "Fire Engineering Calculation Toolkit",
+  "short_name": "Fire Toolkit",
+  "description": "Pre-dimensionamento e Computi di Cantiere Antincendio (Acciaio, Cemento, Muratura, Cartongesso, Legno)",
+  "start_url": "/schede/",
+  "scope": "/schede/",
+  "id": "/schede/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/schede/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/schede/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/schede/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
