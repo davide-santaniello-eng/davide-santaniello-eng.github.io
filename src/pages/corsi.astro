@@ -1269,9 +1269,6 @@
         setCloudStatus('error', 'Offline / CDN in attesa');
         return;
       }
-        setCloudStatus('error', 'Offline');
-        return;
-      }
       setCloudStatus('syncing', 'Controllo cloud...');
       try {
         const { data, error } = await sb
