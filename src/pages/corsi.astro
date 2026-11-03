@@ -388,6 +388,8 @@
     }
 
     .lesson-item {
+      cursor: pointer;
+      user-select: none;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 1.15rem;
@@ -735,10 +737,20 @@
     </div>
 
     <!-- Filters & List -->
-    <div class="filters-bar">
+    <div class="filters-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
       <div class="filter-tabs" id="filterTabsContainer"></div>
-      <div style="font-size: 0.85rem; color: var(--text-muted);" id="filterCountLabel">
-        Mostrando lezioni
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <div style="font-size: 0.85rem; color: var(--text-muted);" id="filterCountLabel">
+          Mostrando lezioni
+        </div>
+        <div style="display: flex; gap: 0.4rem;">
+          <button class="btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.75rem;" onclick="markAllCurrent(true)" title="Segna tutte le lezioni mostrate come completate">
+            ✓ Tutte
+          </button>
+          <button class="btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.75rem;" onclick="markAllCurrent(false)" title="Deseleziona tutte le lezioni">
+            ✕ Azzera
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1377,6 +1389,7 @@
       renderFilterTabs();
       loadTargetDate();
       renderLessons();
+      renderFilterTabs();
       updateStats();
       calculatePace();
       syncFromCloud(courseId);
@@ -1391,18 +1404,22 @@
 
     function renderFilterTabs() {
       const c = COURSES_DATA[currentCourseId];
+      const completedSet = getCompletedSet();
       const container = document.getElementById('filterTabsContainer');
       
-      let html = `<button class="tab-btn active" onclick="setFilter('all', this)">Tutte (${c.lessons.length})</button>`;
+      const doneCount = c.lessons.filter(l => completedSet.has(l.id)).length;
+      const todoCount = c.lessons.length - doneCount;
+
+      let html = `<button class="tab-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all', this)">Tutte (${c.lessons.length})</button>`;
       
       c.modules.forEach(m => {
         const count = c.lessons.filter(l => l.module === m).length;
-        html += `<button class="tab-btn" onclick="setFilter('${m}', this)">${m} (${count})</button>`;
+        html += `<button class="tab-btn ${currentFilter === m ? 'active' : ''}" onclick="setFilter('${m}', this)">${m} (${count})</button>`;
       });
 
       html += `
-        <button class="tab-btn" onclick="setFilter('todo', this)">Da Fare</button>
-        <button class="tab-btn" onclick="setFilter('done', this)">Completate</button>
+        <button class="tab-btn ${currentFilter === 'todo' ? 'active' : ''}" onclick="setFilter('todo', this)">Da Fare (${todoCount})</button>
+        <button class="tab-btn ${currentFilter === 'done' ? 'active' : ''}" onclick="setFilter('done', this)">Completate (${doneCount})</button>
       `;
 
       container.innerHTML = html;
@@ -1429,6 +1446,7 @@
       }
       localStorage.setItem(getStorageKey(), JSON.stringify([...completedSet]));
       renderLessons();
+      renderFilterTabs();
       updateStats();
       calculatePace();
       queueCloudSave();
@@ -1437,15 +1455,16 @@
     function updateStats() {
       const c = COURSES_DATA[currentCourseId];
       const completedSet = getCompletedSet();
+      const doneLessons = c.lessons.filter(l => completedSet.has(l.id));
       const totalSec = c.lessons.reduce((acc, cur) => acc + cur.duration_sec, 0);
-      const doneSec = c.lessons.filter(l => completedSet.has(l.id)).reduce((acc, cur) => acc + cur.duration_sec, 0);
+      const doneSec = doneLessons.reduce((acc, cur) => acc + cur.duration_sec, 0);
       const remSec = Math.max(0, totalSec - doneSec);
 
       const remH = (remSec / 3600).toFixed(1);
       const doneH = (doneSec / 3600).toFixed(1);
       const totalH = (totalSec / 3600).toFixed(1);
 
-      const doneCount = completedSet.size;
+      const doneCount = doneLessons.length;
       const pct = Math.round((doneSec / totalSec) * 100);
 
       document.getElementById('remainingHours').innerHTML = `${remH} <span class="unit">ore</span>`;
@@ -1553,8 +1572,8 @@
         const moduleClass = l.module.toLowerCase().replace(/[^a-z0-9]/g, '-');
 
         return `
-          <div class="lesson-item ${isDone ? 'completed' : ''}" onclick="toggleLesson('${l.id}')">
-            <div class="checkbox-wrap" onclick="event.stopPropagation(); toggleLesson('${l.id}')">
+          <div class="lesson-item ${isDone ? 'completed' : ''}" onclick="toggleLesson('${l.id}')" title="Clicca per segnare/deselezionare">
+            <div class="checkbox-wrap">
               <div class="custom-checkbox">
                 <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
@@ -1626,6 +1645,23 @@
       reader.readAsText(file);
       event.target.value = '';
     }
+
+    function markAllCurrent(completed) {
+      const c = COURSES_DATA[currentCourseId];
+      const completedSet = getCompletedSet();
+      if (completed) {
+        c.lessons.forEach(l => completedSet.add(l.id));
+      } else {
+        c.lessons.forEach(l => completedSet.delete(l.id));
+      }
+      localStorage.setItem(getStorageKey(), JSON.stringify([...completedSet]));
+      renderLessons();
+      renderFilterTabs();
+      updateStats();
+      calculatePace();
+      queueCloudSave();
+    }
+    window.markAllCurrent = markAllCurrent;
 
     async function resetState() {
       if (confirm(`Sei sicuro di voler resettare i progressi per il corso ${COURSES_DATA[currentCourseId].name}?`)) {
