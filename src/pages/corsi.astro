@@ -127,6 +127,11 @@
       color: #6d28d9;
       border-color: rgba(124, 58, 237, 0.35);
     }
+    .course-btn[data-course="IT"].active {
+      color: #d97706;
+      border-color: rgba(217, 119, 6, 0.4);
+    }
+
 
     .cloud-status-pill {
       display: inline-flex;
@@ -585,6 +590,36 @@
       color: #db2777;
       border: 1px solid rgba(219, 39, 119, 0.25);
     }
+    .module-pill.m1---production-systems {
+      background: rgba(2, 132, 199, 0.1);
+      color: #0284c7;
+      border: 1px solid rgba(2, 132, 199, 0.25);
+    }
+
+    .module-pill.m2---manufacturing-systems {
+      background: rgba(217, 119, 6, 0.1);
+      color: #d97706;
+      border: 1px solid rgba(217, 119, 6, 0.25);
+    }
+
+    .module-pill.m3---assembly-systems {
+      background: rgba(5, 150, 105, 0.1);
+      color: #059669;
+      border: 1px solid rgba(5, 150, 105, 0.25);
+    }
+
+    .module-pill.m4---factory-physics---simulation {
+      background: rgba(124, 58, 237, 0.1);
+      color: #7c3aed;
+      border: 1px solid rgba(124, 58, 237, 0.25);
+    }
+
+    .module-pill.ceres-project {
+      background: rgba(219, 39, 119, 0.1);
+      color: #db2777;
+      border: 1px solid rgba(219, 39, 119, 0.25);
+    }
+
 
     .lesson-info {
       flex: 1;
@@ -652,6 +687,9 @@
           </button>
           <button class="course-btn" data-course="AFC" onclick="switchCourse('AFC')">
             <span>📊 Accounting, Finance & Control</span>
+          </button>
+          <button class="course-btn" data-course="IT" onclick="switchCourse('IT')">
+            <span>⚙️ Impianti e Tecnologie Industriali</span>
           </button>
         </div>
       </div>
@@ -760,455 +798,755 @@
   <script is:inline>
     const COURSES_DATA = {
       "SM": {
-        "id": "SM",
-        "name": "Strategy & Marketing 🎯",
-        "code": "S&M",
-        "badge": "Politecnico di Milano • 10 CFU",
-        "description": "Interactive Course Progress Tracker & Exam Deadline Planner",
-        "modules": ["Strategy", "Marketing"],
-        "lessons": [
-          {
-            "id": "lesson_01",
-            "order": 1,
-            "name": "Strategy - L00 - Introduction to the course",
-            "code": "L00",
-            "topic": "Introduction to the course",
-            "module": "Strategy",
-            "duration_sec": 7163,
-            "duration_formatted": "1h 59m",
-            "duration_h": 1.99
-          },
-          {
-            "id": "lesson_02",
-            "order": 2,
-            "name": "Strategy - L01 - Introduction to Strategy",
-            "code": "L01",
-            "topic": "Introduction to Strategy",
-            "module": "Strategy",
-            "duration_sec": 11691,
-            "duration_formatted": "3h 14m",
-            "duration_h": 3.25
-          },
-          {
-            "id": "lesson_03",
-            "order": 3,
-            "name": "Strategy - L02 & L03 - Corporate Strategy & External Analysis",
-            "code": "L02 & L03",
-            "topic": "Corporate Strategy & External Analysis",
-            "module": "Strategy",
-            "duration_sec": 5897,
-            "duration_formatted": "1h 38m",
-            "duration_h": 1.64
-          },
-          {
-            "id": "lesson_04",
-            "order": 4,
-            "name": "Strategy - L04 & L05 - Tesla Case Study + Business Strategy & Internal Analysis",
-            "code": "L04 & L05",
-            "topic": "Tesla Case Study + Business Strategy & Internal Analysis",
-            "module": "Strategy",
-            "duration_sec": 4398,
-            "duration_formatted": "1h 13m",
-            "duration_h": 1.22
-          },
-          {
-            "id": "lesson_05",
-            "order": 5,
-            "name": "Strategy - L05 & L06 - Internal Analysis & Strategy Formulation Process",
-            "code": "L05 & L06",
-            "topic": "Internal Analysis & Strategy Formulation Process",
-            "module": "Strategy",
-            "duration_sec": 9389,
-            "duration_formatted": "2h 36m",
-            "duration_h": 2.61
-          },
-          {
-            "id": "lesson_06",
-            "order": 6,
-            "name": "Strategy - L07 - Case Study Session",
-            "code": "L07",
-            "topic": "Case Study Session",
-            "module": "Strategy",
-            "duration_sec": 389,
-            "duration_formatted": "0h 06m",
-            "duration_h": 0.11
-          },
-          {
-            "id": "lesson_07",
-            "order": 7,
-            "name": "Strategy - L08 - Internationalization Strategy",
-            "code": "L08",
-            "topic": "Internationalization Strategy",
-            "module": "Strategy",
-            "duration_sec": 5584,
-            "duration_formatted": "1h 33m",
-            "duration_h": 1.55
-          },
-          {
-            "id": "lesson_08",
-            "order": 8,
-            "name": "Strategy - L09 - Disruptive Innovation",
-            "code": "L09",
-            "topic": "Disruptive Innovation",
-            "module": "Strategy",
-            "duration_sec": 3587,
-            "duration_formatted": "0h 59m",
-            "duration_h": 1.0
-          },
-          {
-            "id": "lesson_09",
-            "order": 9,
-            "name": "Strategy – L10 - Mergers & Acquisitions",
-            "code": "L10",
-            "topic": "Mergers & Acquisitions",
-            "module": "Strategy",
-            "duration_sec": 6669,
-            "duration_formatted": "1h 51m",
-            "duration_h": 1.85
-          },
-          {
-            "id": "lesson_10",
-            "order": 10,
-            "name": "Strategy – L10 - Entrepreneurial Strategy (part 1)",
-            "code": "L10 Pt. 1",
-            "topic": "Entrepreneurial Strategy (part 1)",
-            "module": "Strategy",
-            "duration_sec": 1597,
-            "duration_formatted": "0h 26m",
-            "duration_h": 0.44
-          },
-          {
-            "id": "lesson_11",
-            "order": 11,
-            "name": "Strategy – L11 - Blue Ocean Strategy",
-            "code": "L11",
-            "topic": "Blue Ocean Strategy",
-            "module": "Strategy",
-            "duration_sec": 4004,
-            "duration_formatted": "1h 06m",
-            "duration_h": 1.11
-          },
-          {
-            "id": "lesson_12",
-            "order": 12,
-            "name": "Strategy – L10 - Entrepreneurial Strategy (part 2) (copy)",
-            "code": "L10 Pt. 2",
-            "topic": "Entrepreneurial Strategy (part 2)",
-            "module": "Strategy",
-            "duration_sec": 3522,
-            "duration_formatted": "0h 58m",
-            "duration_h": 0.98
-          },
-          {
-            "id": "lesson_13",
-            "order": 13,
-            "name": "Marketing - L01 - Marketing Introduction & Demand",
-            "code": "L01",
-            "topic": "Marketing Introduction & Demand",
-            "module": "Marketing",
-            "duration_sec": 9649,
-            "duration_formatted": "2h 40m",
-            "duration_h": 2.68
-          },
-          {
-            "id": "lesson_14",
-            "order": 14,
-            "name": "Marketing - L02 - Segmentation",
-            "code": "L02",
-            "topic": "Segmentation",
-            "module": "Marketing",
-            "duration_sec": 10939,
-            "duration_formatted": "3h 02m",
-            "duration_h": 3.04
-          },
-          {
-            "id": "lesson_15",
-            "order": 15,
-            "name": "Marketing - L03 - Targeting & Positioning",
-            "code": "L03",
-            "topic": "Targeting & Positioning",
-            "module": "Marketing",
-            "duration_sec": 8216,
-            "duration_formatted": "2h 16m",
-            "duration_h": 2.28
-          },
-          {
-            "id": "lesson_16",
-            "order": 16,
-            "name": "Marketing - L04 - Marketing Mix Pt. 1",
-            "code": "L04",
-            "topic": "Marketing Mix Pt. 1",
-            "module": "Marketing",
-            "duration_sec": 11143,
-            "duration_formatted": "3h 05m",
-            "duration_h": 3.1
-          },
-          {
-            "id": "lesson_17",
-            "order": 17,
-            "name": "Marketing - L05 - Marketing Mix Pt. 2",
-            "code": "L05",
-            "topic": "Marketing Mix Pt. 2",
-            "module": "Marketing",
-            "duration_sec": 10901,
-            "duration_formatted": "3h 01m",
-            "duration_h": 3.03
-          },
-          {
-            "id": "lesson_18",
-            "order": 18,
-            "name": "Marketing - L06 - Marketing Mix Pt. 3_1",
-            "code": "L06.1",
-            "topic": "Marketing Mix Pt. 3_1",
-            "module": "Marketing",
-            "duration_sec": 712,
-            "duration_formatted": "0h 11m",
-            "duration_h": 0.2
-          },
-          {
-            "id": "lesson_19",
-            "order": 19,
-            "name": "Marketing - L06 - Marketing Mix Pt. 3_2",
-            "code": "L06.2",
-            "topic": "Marketing Mix Pt. 3_2",
-            "module": "Marketing",
-            "duration_sec": 5624,
-            "duration_formatted": "1h 33m",
-            "duration_h": 1.56
-          },
-          {
-            "id": "lesson_20",
-            "order": 20,
-            "name": "Marketing - L07 - New Trends and Media",
-            "code": "L07",
-            "topic": "New Trends and Media",
-            "module": "Marketing",
-            "duration_sec": 9674,
-            "duration_formatted": "2h 41m",
-            "duration_h": 2.69
-          }
-        ]
+            "id": "SM",
+            "name": "Strategy & Marketing 🎯",
+            "code": "S&M",
+            "badge": "Politecnico di Milano • 10 CFU",
+            "description": "Interactive Course Progress Tracker & Exam Deadline Planner",
+            "modules": [
+                  "Strategy",
+                  "Marketing"
+            ],
+            "lessons": [
+                  {
+                        "id": "lesson_01",
+                        "order": 1,
+                        "name": "Strategy - L00 - Introduction to the course",
+                        "code": "L00",
+                        "topic": "Introduction to the course",
+                        "module": "Strategy",
+                        "duration_sec": 7163,
+                        "duration_formatted": "1h 59m",
+                        "duration_h": 1.99
+                  },
+                  {
+                        "id": "lesson_02",
+                        "order": 2,
+                        "name": "Strategy - L01 - Introduction to Strategy",
+                        "code": "L01",
+                        "topic": "Introduction to Strategy",
+                        "module": "Strategy",
+                        "duration_sec": 11691,
+                        "duration_formatted": "3h 14m",
+                        "duration_h": 3.25
+                  },
+                  {
+                        "id": "lesson_03",
+                        "order": 3,
+                        "name": "Strategy - L02 & L03 - Corporate Strategy & External Analysis",
+                        "code": "L02 & L03",
+                        "topic": "Corporate Strategy & External Analysis",
+                        "module": "Strategy",
+                        "duration_sec": 5897,
+                        "duration_formatted": "1h 38m",
+                        "duration_h": 1.64
+                  },
+                  {
+                        "id": "lesson_04",
+                        "order": 4,
+                        "name": "Strategy - L04 & L05 - Tesla Case Study + Business Strategy & Internal Analysis",
+                        "code": "L04 & L05",
+                        "topic": "Tesla Case Study + Business Strategy & Internal Analysis",
+                        "module": "Strategy",
+                        "duration_sec": 4398,
+                        "duration_formatted": "1h 13m",
+                        "duration_h": 1.22
+                  },
+                  {
+                        "id": "lesson_05",
+                        "order": 5,
+                        "name": "Strategy - L05 & L06 - Internal Analysis & Strategy Formulation Process",
+                        "code": "L05 & L06",
+                        "topic": "Internal Analysis & Strategy Formulation Process",
+                        "module": "Strategy",
+                        "duration_sec": 9389,
+                        "duration_formatted": "2h 36m",
+                        "duration_h": 2.61
+                  },
+                  {
+                        "id": "lesson_06",
+                        "order": 6,
+                        "name": "Strategy - L07 - Case Study Session",
+                        "code": "L07",
+                        "topic": "Case Study Session",
+                        "module": "Strategy",
+                        "duration_sec": 389,
+                        "duration_formatted": "0h 06m",
+                        "duration_h": 0.11
+                  },
+                  {
+                        "id": "lesson_07",
+                        "order": 7,
+                        "name": "Strategy - L08 - Internationalization Strategy",
+                        "code": "L08",
+                        "topic": "Internationalization Strategy",
+                        "module": "Strategy",
+                        "duration_sec": 5584,
+                        "duration_formatted": "1h 33m",
+                        "duration_h": 1.55
+                  },
+                  {
+                        "id": "lesson_08",
+                        "order": 8,
+                        "name": "Strategy - L09 - Disruptive Innovation",
+                        "code": "L09",
+                        "topic": "Disruptive Innovation",
+                        "module": "Strategy",
+                        "duration_sec": 3587,
+                        "duration_formatted": "0h 59m",
+                        "duration_h": 1.0
+                  },
+                  {
+                        "id": "lesson_09",
+                        "order": 9,
+                        "name": "Strategy – L10 - Mergers & Acquisitions",
+                        "code": "L10",
+                        "topic": "Mergers & Acquisitions",
+                        "module": "Strategy",
+                        "duration_sec": 6669,
+                        "duration_formatted": "1h 51m",
+                        "duration_h": 1.85
+                  },
+                  {
+                        "id": "lesson_10",
+                        "order": 10,
+                        "name": "Strategy – L10 - Entrepreneurial Strategy (part 1)",
+                        "code": "L10 Pt. 1",
+                        "topic": "Entrepreneurial Strategy (part 1)",
+                        "module": "Strategy",
+                        "duration_sec": 1597,
+                        "duration_formatted": "0h 26m",
+                        "duration_h": 0.44
+                  },
+                  {
+                        "id": "lesson_11",
+                        "order": 11,
+                        "name": "Strategy – L11 - Blue Ocean Strategy",
+                        "code": "L11",
+                        "topic": "Blue Ocean Strategy",
+                        "module": "Strategy",
+                        "duration_sec": 4004,
+                        "duration_formatted": "1h 06m",
+                        "duration_h": 1.11
+                  },
+                  {
+                        "id": "lesson_12",
+                        "order": 12,
+                        "name": "Strategy – L10 - Entrepreneurial Strategy (part 2) (copy)",
+                        "code": "L10 Pt. 2",
+                        "topic": "Entrepreneurial Strategy (part 2)",
+                        "module": "Strategy",
+                        "duration_sec": 3522,
+                        "duration_formatted": "0h 58m",
+                        "duration_h": 0.98
+                  },
+                  {
+                        "id": "lesson_13",
+                        "order": 13,
+                        "name": "Marketing - L01 - Marketing Introduction & Demand",
+                        "code": "L01",
+                        "topic": "Marketing Introduction & Demand",
+                        "module": "Marketing",
+                        "duration_sec": 9649,
+                        "duration_formatted": "2h 40m",
+                        "duration_h": 2.68
+                  },
+                  {
+                        "id": "lesson_14",
+                        "order": 14,
+                        "name": "Marketing - L02 - Segmentation",
+                        "code": "L02",
+                        "topic": "Segmentation",
+                        "module": "Marketing",
+                        "duration_sec": 10939,
+                        "duration_formatted": "3h 02m",
+                        "duration_h": 3.04
+                  },
+                  {
+                        "id": "lesson_15",
+                        "order": 15,
+                        "name": "Marketing - L03 - Targeting & Positioning",
+                        "code": "L03",
+                        "topic": "Targeting & Positioning",
+                        "module": "Marketing",
+                        "duration_sec": 8216,
+                        "duration_formatted": "2h 16m",
+                        "duration_h": 2.28
+                  },
+                  {
+                        "id": "lesson_16",
+                        "order": 16,
+                        "name": "Marketing - L04 - Marketing Mix Pt. 1",
+                        "code": "L04",
+                        "topic": "Marketing Mix Pt. 1",
+                        "module": "Marketing",
+                        "duration_sec": 11143,
+                        "duration_formatted": "3h 05m",
+                        "duration_h": 3.1
+                  },
+                  {
+                        "id": "lesson_17",
+                        "order": 17,
+                        "name": "Marketing - L05 - Marketing Mix Pt. 2",
+                        "code": "L05",
+                        "topic": "Marketing Mix Pt. 2",
+                        "module": "Marketing",
+                        "duration_sec": 10901,
+                        "duration_formatted": "3h 01m",
+                        "duration_h": 3.03
+                  },
+                  {
+                        "id": "lesson_18",
+                        "order": 18,
+                        "name": "Marketing - L06 - Marketing Mix Pt. 3_1",
+                        "code": "L06.1",
+                        "topic": "Marketing Mix Pt. 3_1",
+                        "module": "Marketing",
+                        "duration_sec": 712,
+                        "duration_formatted": "0h 11m",
+                        "duration_h": 0.2
+                  },
+                  {
+                        "id": "lesson_19",
+                        "order": 19,
+                        "name": "Marketing - L06 - Marketing Mix Pt. 3_2",
+                        "code": "L06.2",
+                        "topic": "Marketing Mix Pt. 3_2",
+                        "module": "Marketing",
+                        "duration_sec": 5624,
+                        "duration_formatted": "1h 33m",
+                        "duration_h": 1.56
+                  },
+                  {
+                        "id": "lesson_20",
+                        "order": 20,
+                        "name": "Marketing - L07 - New Trends and Media",
+                        "code": "L07",
+                        "topic": "New Trends and Media",
+                        "module": "Marketing",
+                        "duration_sec": 9674,
+                        "duration_formatted": "2h 41m",
+                        "duration_h": 2.69
+                  }
+            ]
       },
       "AFC": {
-        "id": "AFC",
-        "name": "Accounting, Finance and Control 📊",
-        "code": "AFC",
-        "badge": "Politecnico di Milano • 10 CFU",
-        "description": "Financial Accounting, Ratios, Cash Flow & Management Control",
-        "modules": ["Financial Accounting", "Financial Analysis", "Cost Accounting", "Management Control", "Esercitazioni"],
-        "lessons": [
-          {
-            "id": "afc_lesson_01",
-            "order": 1,
-            "name": "AFC - L01 - Aims, Requirements & Accounting Fundamentals Recap",
-            "code": "L01",
-            "topic": "Aims, Requirements & Accounting Fundamentals Recap",
-            "module": "Financial Accounting",
-            "duration_sec": 8880,
-            "duration_formatted": "2h 28m",
-            "duration_h": 2.47
-          },
-          {
-            "id": "afc_lesson_02",
-            "order": 2,
-            "name": "AFC - L02 - Financial Statements Overview (Balance Sheet & Income Statement)",
-            "code": "L02",
-            "topic": "Financial Statements Overview (Balance Sheet & Income Statement)",
-            "module": "Financial Accounting",
-            "duration_sec": 8520,
-            "duration_formatted": "2h 22m",
-            "duration_h": 2.37
-          },
-          {
-            "id": "afc_lesson_03",
-            "order": 3,
-            "name": "AFC - L03 - Annual Reporting & Accounting Principles (IFRS-IAS)",
-            "code": "L03",
-            "topic": "Annual Reporting & Accounting Principles (IFRS-IAS)",
-            "module": "Financial Accounting",
-            "duration_sec": 5520,
-            "duration_formatted": "1h 32m",
-            "duration_h": 1.53
-          },
-          {
-            "id": "afc_lesson_04",
-            "order": 4,
-            "name": "AFC - L04 - Balance Sheet Deep Dive & Notes to Financial Statements",
-            "code": "L04",
-            "topic": "Balance Sheet Deep Dive & Notes to Financial Statements",
-            "module": "Financial Accounting",
-            "duration_sec": 8280,
-            "duration_formatted": "2h 18m",
-            "duration_h": 2.3
-          },
-          {
-            "id": "afc_lesson_05",
-            "order": 5,
-            "name": "AFC - L05 - Financial Statements Reclassification (Financial Criteria)",
-            "code": "L05",
-            "topic": "Financial Statements Reclassification (Financial Criteria)",
-            "module": "Financial Analysis",
-            "duration_sec": 4320,
-            "duration_formatted": "1h 12m",
-            "duration_h": 1.2
-          },
-          {
-            "id": "afc_lesson_06",
-            "order": 6,
-            "name": "AFC - L06 - Working Capital & Net Operating Working Capital (NOWC)",
-            "code": "L06",
-            "topic": "Working Capital & Net Operating Working Capital (NOWC)",
-            "module": "Financial Analysis",
-            "duration_sec": 4440,
-            "duration_formatted": "1h 14m",
-            "duration_h": 1.23
-          },
-          {
-            "id": "afc_lesson_07",
-            "order": 7,
-            "name": "AFC - L07 - Functional Reclassification & Net Invested Capital (NIC)",
-            "code": "L07",
-            "topic": "Functional Reclassification & Net Invested Capital (NIC)",
-            "module": "Financial Analysis",
-            "duration_sec": 6900,
-            "duration_formatted": "1h 55m",
-            "duration_h": 1.92
-          },
-          {
-            "id": "afc_lesson_08",
-            "order": 8,
-            "name": "AFC - L08 - Profitability Ratios & DuPont Analysis (ROE, ROI, ROS)",
-            "code": "L08",
-            "topic": "Profitability Ratios & DuPont Analysis (ROE, ROI, ROS)",
-            "module": "Financial Analysis",
-            "duration_sec": 6420,
-            "duration_formatted": "1h 47m",
-            "duration_h": 1.78
-          },
-          {
-            "id": "afc_lesson_09",
-            "order": 9,
-            "name": "AFC - L09 - Financial Leverage, Spread Effect & Debt Sustainability",
-            "code": "L09",
-            "topic": "Financial Leverage, Spread Effect & Debt Sustainability",
-            "module": "Financial Analysis",
-            "duration_sec": 5940,
-            "duration_formatted": "1h 39m",
-            "duration_h": 1.65
-          },
-          {
-            "id": "afc_lesson_10",
-            "order": 10,
-            "name": "AFC - L10 - Liquidity & Solvency Ratios (Current, Quick, Debt to Equity)",
-            "code": "L10",
-            "topic": "Liquidity & Solvency Ratios (Current, Quick, Debt to Equity)",
-            "module": "Financial Analysis",
-            "duration_sec": 6900,
-            "duration_formatted": "1h 55m",
-            "duration_h": 1.92
-          },
-          {
-            "id": "afc_lesson_11",
-            "order": 11,
-            "name": "AFC - L11 - Eni Case Study - Financial Ratio Analysis in Practice",
-            "code": "L11",
-            "topic": "Eni Case Study - Financial Ratio Analysis in Practice",
-            "module": "Financial Analysis",
-            "duration_sec": 4440,
-            "duration_formatted": "1h 14m",
-            "duration_h": 1.23
-          },
-          {
-            "id": "afc_lesson_12",
-            "order": 12,
-            "name": "AFC - L12 - Cash Flow Statement (OFCF & Cash Generation)",
-            "code": "L12",
-            "topic": "Cash Flow Statement (OFCF & Cash Generation)",
-            "module": "Financial Analysis",
-            "duration_sec": 7260,
-            "duration_formatted": "2h 01m",
-            "duration_h": 2.02
-          },
-          {
-            "id": "afc_lesson_13",
-            "order": 13,
-            "name": "AFC - L13 - Introduction to Management Control Systems (MCS)",
-            "code": "L13",
-            "topic": "Introduction to Management Control Systems (MCS)",
-            "module": "Management Control",
-            "duration_sec": 6900,
-            "duration_formatted": "1h 55m",
-            "duration_h": 1.92
-          },
-          {
-            "id": "afc_lesson_14",
-            "order": 14,
-            "name": "AFC - L14 - Cost Classification, Direct vs Indirect, Variable vs Fixed",
-            "code": "L14",
-            "topic": "Cost Classification, Direct vs Indirect, Variable vs Fixed",
-            "module": "Cost Accounting",
-            "duration_sec": 4980,
-            "duration_formatted": "1h 23m",
-            "duration_h": 1.38
-          },
-          {
-            "id": "afc_lesson_15",
-            "order": 15,
-            "name": "AFC - L15 - Break-Even Analysis, Operating Leverage & Cost Centers",
-            "code": "L15",
-            "topic": "Break-Even Analysis, Operating Leverage & Cost Centers",
-            "module": "Cost Accounting",
-            "duration_sec": 7320,
-            "duration_formatted": "2h 02m",
-            "duration_h": 2.03
-          },
-          {
-            "id": "afc_lesson_16",
-            "order": 16,
-            "name": "AFC - L16 - Activity-Based Costing (ABC) & Cost Allocation Systems",
-            "code": "L16",
-            "topic": "Activity-Based Costing (ABC) & Cost Allocation Systems",
-            "module": "Cost Accounting",
-            "duration_sec": 7740,
-            "duration_formatted": "2h 09m",
-            "duration_h": 2.15
-          },
-          {
-            "id": "afc_lesson_17",
-            "order": 17,
-            "name": "AFC - L17 - Transfer Pricing Policies & Responsibility Centers",
-            "code": "L17",
-            "topic": "Transfer Pricing Policies & Responsibility Centers",
-            "module": "Management Control",
-            "duration_sec": 6960,
-            "duration_formatted": "1h 56m",
-            "duration_h": 1.93
-          },
-          {
-            "id": "afc_lesson_18",
-            "order": 18,
-            "name": "AFC - L18 - Budgeting, Master Budget & Variance Analysis Wrap-up",
-            "code": "L18",
-            "topic": "Budgeting, Master Budget & Variance Analysis Wrap-up",
-            "module": "Management Control",
-            "duration_sec": 4020,
-            "duration_formatted": "1h 07m",
-            "duration_h": 1.12
-          },
-          {
-            "id": "afc_es_01",
-            "order": 19,
-            "name": "AFC - Esercitazione 1 - Financial Statements & Ratios",
-            "code": "ES01",
-            "topic": "Esercitazione 1 - Bilancio, Riclassificazione e Indici",
-            "module": "Esercitazioni",
-            "duration_sec": 13000,
-            "duration_formatted": "3h 36m",
-            "duration_h": 3.61
-          }
-        ]
+            "id": "AFC",
+            "name": "Accounting, Finance and Control 📊",
+            "code": "AFC",
+            "badge": "Politecnico di Milano • 10 CFU",
+            "description": "Financial Accounting, Ratios, Cash Flow & Management Control",
+            "modules": [
+                  "Financial Accounting",
+                  "Financial Analysis",
+                  "Cost Accounting",
+                  "Management Control",
+                  "Esercitazioni"
+            ],
+            "lessons": [
+                  {
+                        "id": "afc_lesson_01",
+                        "order": 1,
+                        "name": "AFC - L01 - Aims, Requirements & Accounting Fundamentals Recap",
+                        "code": "L01",
+                        "topic": "Aims, Requirements & Accounting Fundamentals Recap",
+                        "module": "Financial Accounting",
+                        "duration_sec": 8880,
+                        "duration_formatted": "2h 28m",
+                        "duration_h": 2.47
+                  },
+                  {
+                        "id": "afc_lesson_02",
+                        "order": 2,
+                        "name": "AFC - L02 - Financial Statements Overview (Balance Sheet & Income Statement)",
+                        "code": "L02",
+                        "topic": "Financial Statements Overview (Balance Sheet & Income Statement)",
+                        "module": "Financial Accounting",
+                        "duration_sec": 8520,
+                        "duration_formatted": "2h 22m",
+                        "duration_h": 2.37
+                  },
+                  {
+                        "id": "afc_lesson_03",
+                        "order": 3,
+                        "name": "AFC - L03 - Annual Reporting & Accounting Principles (IFRS-IAS)",
+                        "code": "L03",
+                        "topic": "Annual Reporting & Accounting Principles (IFRS-IAS)",
+                        "module": "Financial Accounting",
+                        "duration_sec": 5520,
+                        "duration_formatted": "1h 32m",
+                        "duration_h": 1.53
+                  },
+                  {
+                        "id": "afc_lesson_04",
+                        "order": 4,
+                        "name": "AFC - L04 - Balance Sheet Deep Dive & Notes to Financial Statements",
+                        "code": "L04",
+                        "topic": "Balance Sheet Deep Dive & Notes to Financial Statements",
+                        "module": "Financial Accounting",
+                        "duration_sec": 8280,
+                        "duration_formatted": "2h 18m",
+                        "duration_h": 2.3
+                  },
+                  {
+                        "id": "afc_lesson_05",
+                        "order": 5,
+                        "name": "AFC - L05 - Financial Statements Reclassification (Financial Criteria)",
+                        "code": "L05",
+                        "topic": "Financial Statements Reclassification (Financial Criteria)",
+                        "module": "Financial Analysis",
+                        "duration_sec": 4320,
+                        "duration_formatted": "1h 12m",
+                        "duration_h": 1.2
+                  },
+                  {
+                        "id": "afc_lesson_06",
+                        "order": 6,
+                        "name": "AFC - L06 - Working Capital & Net Operating Working Capital (NOWC)",
+                        "code": "L06",
+                        "topic": "Working Capital & Net Operating Working Capital (NOWC)",
+                        "module": "Financial Analysis",
+                        "duration_sec": 4440,
+                        "duration_formatted": "1h 14m",
+                        "duration_h": 1.23
+                  },
+                  {
+                        "id": "afc_lesson_07",
+                        "order": 7,
+                        "name": "AFC - L07 - Functional Reclassification & Net Invested Capital (NIC)",
+                        "code": "L07",
+                        "topic": "Functional Reclassification & Net Invested Capital (NIC)",
+                        "module": "Financial Analysis",
+                        "duration_sec": 6900,
+                        "duration_formatted": "1h 55m",
+                        "duration_h": 1.92
+                  },
+                  {
+                        "id": "afc_lesson_08",
+                        "order": 8,
+                        "name": "AFC - L08 - Profitability Ratios & DuPont Analysis (ROE, ROI, ROS)",
+                        "code": "L08",
+                        "topic": "Profitability Ratios & DuPont Analysis (ROE, ROI, ROS)",
+                        "module": "Financial Analysis",
+                        "duration_sec": 6420,
+                        "duration_formatted": "1h 47m",
+                        "duration_h": 1.78
+                  },
+                  {
+                        "id": "afc_lesson_09",
+                        "order": 9,
+                        "name": "AFC - L09 - Financial Leverage, Spread Effect & Debt Sustainability",
+                        "code": "L09",
+                        "topic": "Financial Leverage, Spread Effect & Debt Sustainability",
+                        "module": "Financial Analysis",
+                        "duration_sec": 5940,
+                        "duration_formatted": "1h 39m",
+                        "duration_h": 1.65
+                  },
+                  {
+                        "id": "afc_lesson_10",
+                        "order": 10,
+                        "name": "AFC - L10 - Liquidity & Solvency Ratios (Current, Quick, Debt to Equity)",
+                        "code": "L10",
+                        "topic": "Liquidity & Solvency Ratios (Current, Quick, Debt to Equity)",
+                        "module": "Financial Analysis",
+                        "duration_sec": 6900,
+                        "duration_formatted": "1h 55m",
+                        "duration_h": 1.92
+                  },
+                  {
+                        "id": "afc_lesson_11",
+                        "order": 11,
+                        "name": "AFC - L11 - Eni Case Study - Financial Ratio Analysis in Practice",
+                        "code": "L11",
+                        "topic": "Eni Case Study - Financial Ratio Analysis in Practice",
+                        "module": "Financial Analysis",
+                        "duration_sec": 4440,
+                        "duration_formatted": "1h 14m",
+                        "duration_h": 1.23
+                  },
+                  {
+                        "id": "afc_lesson_12",
+                        "order": 12,
+                        "name": "AFC - L12 - Cash Flow Statement (OFCF & Cash Generation)",
+                        "code": "L12",
+                        "topic": "Cash Flow Statement (OFCF & Cash Generation)",
+                        "module": "Financial Analysis",
+                        "duration_sec": 7260,
+                        "duration_formatted": "2h 01m",
+                        "duration_h": 2.02
+                  },
+                  {
+                        "id": "afc_lesson_13",
+                        "order": 13,
+                        "name": "AFC - L13 - Introduction to Management Control Systems (MCS)",
+                        "code": "L13",
+                        "topic": "Introduction to Management Control Systems (MCS)",
+                        "module": "Management Control",
+                        "duration_sec": 6900,
+                        "duration_formatted": "1h 55m",
+                        "duration_h": 1.92
+                  },
+                  {
+                        "id": "afc_lesson_14",
+                        "order": 14,
+                        "name": "AFC - L14 - Cost Classification, Direct vs Indirect, Variable vs Fixed",
+                        "code": "L14",
+                        "topic": "Cost Classification, Direct vs Indirect, Variable vs Fixed",
+                        "module": "Cost Accounting",
+                        "duration_sec": 4980,
+                        "duration_formatted": "1h 23m",
+                        "duration_h": 1.38
+                  },
+                  {
+                        "id": "afc_lesson_15",
+                        "order": 15,
+                        "name": "AFC - L15 - Break-Even Analysis, Operating Leverage & Cost Centers",
+                        "code": "L15",
+                        "topic": "Break-Even Analysis, Operating Leverage & Cost Centers",
+                        "module": "Cost Accounting",
+                        "duration_sec": 7320,
+                        "duration_formatted": "2h 02m",
+                        "duration_h": 2.03
+                  },
+                  {
+                        "id": "afc_lesson_16",
+                        "order": 16,
+                        "name": "AFC - L16 - Activity-Based Costing (ABC) & Cost Allocation Systems",
+                        "code": "L16",
+                        "topic": "Activity-Based Costing (ABC) & Cost Allocation Systems",
+                        "module": "Cost Accounting",
+                        "duration_sec": 7740,
+                        "duration_formatted": "2h 09m",
+                        "duration_h": 2.15
+                  },
+                  {
+                        "id": "afc_lesson_17",
+                        "order": 17,
+                        "name": "AFC - L17 - Transfer Pricing Policies & Responsibility Centers",
+                        "code": "L17",
+                        "topic": "Transfer Pricing Policies & Responsibility Centers",
+                        "module": "Management Control",
+                        "duration_sec": 6960,
+                        "duration_formatted": "1h 56m",
+                        "duration_h": 1.93
+                  },
+                  {
+                        "id": "afc_lesson_18",
+                        "order": 18,
+                        "name": "AFC - L18 - Budgeting, Master Budget & Variance Analysis Wrap-up",
+                        "code": "L18",
+                        "topic": "Budgeting, Master Budget & Variance Analysis Wrap-up",
+                        "module": "Management Control",
+                        "duration_sec": 4020,
+                        "duration_formatted": "1h 07m",
+                        "duration_h": 1.12
+                  },
+                  {
+                        "id": "afc_es_01",
+                        "order": 19,
+                        "name": "AFC - Esercitazione 1 - Financial Statements & Ratios",
+                        "code": "ES01",
+                        "topic": "Esercitazione 1 - Bilancio, Riclassificazione e Indici",
+                        "module": "Esercitazioni",
+                        "duration_sec": 13000,
+                        "duration_formatted": "3h 36m",
+                        "duration_h": 3.61
+                  }
+            ]
+      },
+      "IT": {
+            "id": "IT",
+            "name": "Impianti e Tecnologie Industriali ⚙️",
+            "code": "IT",
+            "badge": "Politecnico di Milano • 10 CFU",
+            "description": "Production Systems, Job Shop, Manufacturing Cells, Assembly Lines, Factory Physics & Simulation",
+            "modules": [
+                  "M1 - Production Systems",
+                  "M2 - Manufacturing Systems",
+                  "M3 - Assembly Systems",
+                  "M4 - Factory Physics & Simulation",
+                  "CERES Project"
+            ],
+            "lessons": [
+                  {
+                        "id": "it_lesson_01",
+                        "order": 1,
+                        "name": "IT - L01 - Course Intro & Introduction to Production Systems",
+                        "code": "L01",
+                        "topic": "Course Intro & Production Systems Classification (Prof. Terzi)",
+                        "module": "M1 - Production Systems",
+                        "duration_sec": 11049,
+                        "duration_formatted": "3h 04m",
+                        "duration_h": 3.07
+                  },
+                  {
+                        "id": "it_lesson_02",
+                        "order": 2,
+                        "name": "IT - L02 - Production Systems Classification & Case Studies",
+                        "code": "L02",
+                        "topic": "Production Systems Classification, Discontinuous vs Continuous (Prof. Terzi)",
+                        "module": "M1 - Production Systems",
+                        "duration_sec": 6427,
+                        "duration_formatted": "1h 47m",
+                        "duration_h": 1.79
+                  },
+                  {
+                        "id": "it_lesson_03",
+                        "order": 3,
+                        "name": "IT - L03 - Design of Manufacturing Systems - Job Shop Fundamentals",
+                        "code": "L03",
+                        "topic": "Job Shop Fundamentals: Part-Machine Routing & Workload Sizing (Prof. Terzi)",
+                        "module": "M2 - Manufacturing Systems",
+                        "duration_sec": 8462,
+                        "duration_formatted": "2h 21m",
+                        "duration_h": 2.35
+                  },
+                  {
+                        "id": "it_lesson_04",
+                        "order": 4,
+                        "name": "IT - L04 - Job Shop Workload, Machine Sizing & Routing",
+                        "code": "L04",
+                        "topic": "Job Shop Capacity, Machine Sizing, Setups & Scraps (Prof. Terzi)",
+                        "module": "M2 - Manufacturing Systems",
+                        "duration_sec": 7330,
+                        "duration_formatted": "2h 02m",
+                        "duration_h": 2.04
+                  },
+                  {
+                        "id": "it_lesson_05",
+                        "order": 5,
+                        "name": "IT - L05 - Cellular Manufacturing & Group Technology",
+                        "code": "L05",
+                        "topic": "Manufacturing Cells, Group Technology & Clustering Algorithms (Prof. Terzi)",
+                        "module": "M2 - Manufacturing Systems",
+                        "duration_sec": 10332,
+                        "duration_formatted": "2h 52m",
+                        "duration_h": 2.87
+                  },
+                  {
+                        "id": "it_lesson_06",
+                        "order": 6,
+                        "name": "IT - L06 - Job Shop & Manufacturing Cells Exercises",
+                        "code": "L06",
+                        "topic": "Job Shop & Cells Guided Exercises & Economic Sizing (Prof.ssa Rossi)",
+                        "module": "M2 - Manufacturing Systems",
+                        "duration_sec": 12624,
+                        "duration_formatted": "3h 30m",
+                        "duration_h": 3.51
+                  },
+                  {
+                        "id": "it_lesson_07",
+                        "order": 7,
+                        "name": "IT - L07 - Transfer Lines & Automated Production Systems",
+                        "code": "L07",
+                        "topic": "Transfer Lines: Automation, Cadence, Failure Models & Intermediary Buffers (Prof. Terzi)",
+                        "module": "M2 - Manufacturing Systems",
+                        "duration_sec": 9692,
+                        "duration_formatted": "2h 41m",
+                        "duration_h": 2.69
+                  },
+                  {
+                        "id": "it_lesson_08",
+                        "order": 8,
+                        "name": "IT - L08 - CERES Project Rules & Transfer Lines Exercises",
+                        "code": "L08",
+                        "topic": "CERES Project Presentation & Transfer Line Design Briefing (Prof. Terzi)",
+                        "module": "M2 - Manufacturing Systems",
+                        "duration_sec": 3286,
+                        "duration_formatted": "0h 54m",
+                        "duration_h": 0.91
+                  },
+                  {
+                        "id": "it_lesson_09",
+                        "order": 9,
+                        "name": "IT - L09 - Introduction to Factory Physics & Operational Laws",
+                        "code": "L09",
+                        "topic": "Introduction to Factory Physics: TH, WIP, CT & Little's Law Foundations (Prof. Xiao)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 6050,
+                        "duration_formatted": "1h 40m",
+                        "duration_h": 1.68
+                  },
+                  {
+                        "id": "it_lesson_10",
+                        "order": 10,
+                        "name": "IT - L10 - CERES Seminar - Circular Manufacturing & Sustainability",
+                        "code": "L10",
+                        "topic": "CERES Seminar: Circular Manufacturing & Resource Recovery (Prof. Terzi)",
+                        "module": "CERES Project",
+                        "duration_sec": 3064,
+                        "duration_formatted": "0h 51m",
+                        "duration_h": 0.85
+                  },
+                  {
+                        "id": "it_lesson_11",
+                        "order": 11,
+                        "name": "IT - L11 - Transfer Lines Exercises & Module 2 Recap",
+                        "code": "L11",
+                        "topic": "Transfer Lines Exercises Solution & Module 2 Systems Recap (Prof.ssa Rossi)",
+                        "module": "M2 - Manufacturing Systems",
+                        "duration_sec": 1605,
+                        "duration_formatted": "0h 26m",
+                        "duration_h": 0.45
+                  },
+                  {
+                        "id": "it_lesson_12",
+                        "order": 12,
+                        "name": "IT - L12 - Factory Physics - Little's Law & Bottleneck Rates",
+                        "code": "L12",
+                        "topic": "Little's Law, Critical WIP (W0), Best/Worst Case Boundaries (Prof. Xiao)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 5114,
+                        "duration_formatted": "1h 25m",
+                        "duration_h": 1.42
+                  },
+                  {
+                        "id": "it_lesson_13",
+                        "order": 13,
+                        "name": "IT - L13 - Discrete-Event Simulation & Project Launch",
+                        "code": "L13",
+                        "topic": "Simulation Taxonomy, DES Foundations & Simulation Project Launch (Prof. Ragazzini)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 3747,
+                        "duration_formatted": "1h 02m",
+                        "duration_h": 1.04
+                  },
+                  {
+                        "id": "it_lesson_14",
+                        "order": 14,
+                        "name": "IT - L14 - Factory Physics - Variability & Capacity Analysis",
+                        "code": "L14",
+                        "topic": "Variability Effects, Variance Coefficient (CV) & Capacity Utilization (Prof. Xiao)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 1944,
+                        "duration_formatted": "0h 32m",
+                        "duration_h": 0.54
+                  },
+                  {
+                        "id": "it_lesson_15",
+                        "order": 15,
+                        "name": "IT - L15 - Factory Physics - Queueing Systems & Batch Sizing",
+                        "code": "L15",
+                        "topic": "Queueing Equations (M/M/1, G/G/1), Cycle Time & Optimal Batch Sizing (Prof. Xiao)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 4513,
+                        "duration_formatted": "1h 15m",
+                        "duration_h": 1.25
+                  },
+                  {
+                        "id": "it_lesson_16",
+                        "order": 16,
+                        "name": "IT - L16 - Design of Assembly Systems - Manual & Automated Lines",
+                        "code": "L16",
+                        "topic": "Assembly Systems: Fixed Position vs Assembly Lines, Precedence Graphs (Prof. Terzi)",
+                        "module": "M3 - Assembly Systems",
+                        "duration_sec": 8062,
+                        "duration_formatted": "2h 14m",
+                        "duration_h": 2.24
+                  },
+                  {
+                        "id": "it_lesson_17",
+                        "order": 17,
+                        "name": "IT - L17 - Assembly Lines Design - Exercise Briefing",
+                        "code": "L17",
+                        "topic": "Assembly Line Design & Balancing Practical Case Briefing (Prof. Terzi)",
+                        "module": "M3 - Assembly Systems",
+                        "duration_sec": 2764,
+                        "duration_formatted": "0h 46m",
+                        "duration_h": 0.77
+                  },
+                  {
+                        "id": "it_lesson_18",
+                        "order": 18,
+                        "name": "IT - L18 - Assembly Systems Optimization & Resource Utilization",
+                        "code": "L18",
+                        "topic": "Assembly Line Balancing Optimization & CERES Resource Utilization (Prof. Terzi)",
+                        "module": "M3 - Assembly Systems",
+                        "duration_sec": 5584,
+                        "duration_formatted": "1h 33m",
+                        "duration_h": 1.55
+                  },
+                  {
+                        "id": "it_lesson_19",
+                        "order": 19,
+                        "name": "IT - L19 - Simulation Project Part 2 Launch & Model Architecture",
+                        "code": "L19",
+                        "topic": "Simulation Project Part 2: Routing Logic, Delays & Model Verification (Prof. Ragazzini)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 4127,
+                        "duration_formatted": "1h 08m",
+                        "duration_h": 1.15
+                  },
+                  {
+                        "id": "it_lesson_20",
+                        "order": 20,
+                        "name": "IT - L20 - Assembly Line Balancing Exercises & Heuristics",
+                        "code": "L20",
+                        "topic": "Line Balancing Heuristics: RPW, Kilbridge-Wester & Solved Exercises (Prof.ssa Rossi)",
+                        "module": "M3 - Assembly Systems",
+                        "duration_sec": 8116,
+                        "duration_formatted": "2h 15m",
+                        "duration_h": 2.25
+                  },
+                  {
+                        "id": "it_lesson_21",
+                        "order": 21,
+                        "name": "IT - L21 - Factory Layout Planning (FLP) - Systematic Layout Planning",
+                        "code": "L21",
+                        "topic": "Factory Layout Planning (FLP): Muther SLP Method, From-To Chart & Space (Prof. Terzi)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 6305,
+                        "duration_formatted": "1h 45m",
+                        "duration_h": 1.75
+                  },
+                  {
+                        "id": "it_lesson_22",
+                        "order": 22,
+                        "name": "IT - L22 - System Availability, Reliability & Maintenance Models",
+                        "code": "L22",
+                        "topic": "System Availability, Reliability (MTBF, MTTR), Maintenance & Failure Models (Prof. Terzi)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 7787,
+                        "duration_formatted": "2h 09m",
+                        "duration_h": 2.16
+                  },
+                  {
+                        "id": "it_lesson_23",
+                        "order": 23,
+                        "name": "IT - L23 - Introduction to Simulation & Modeling Taxonomy",
+                        "code": "L23",
+                        "topic": "Deep Dive: Simulation Taxonomy (Static vs Dynamic, Stochastic vs Deterministic) (Prof. Ragazzini)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 1060,
+                        "duration_formatted": "0h 17m",
+                        "duration_h": 0.29
+                  },
+                  {
+                        "id": "it_lesson_24",
+                        "order": 24,
+                        "name": "IT - L24 - Monte Carlo Simulation & Stochastic Modeling in Excel",
+                        "code": "L24",
+                        "topic": "Deep Dive: Monte Carlo Simulation & Stochastic Random Variables in Excel (Prof. Ragazzini)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 3664,
+                        "duration_formatted": "1h 01m",
+                        "duration_h": 1.02
+                  },
+                  {
+                        "id": "it_lesson_25",
+                        "order": 25,
+                        "name": "IT - L25 - Discrete Event Simulation - Entities, Resources & Queues",
+                        "code": "L25",
+                        "topic": "Deep Dive: Discrete Event Simulation, Entities, Queues & Simulink/Arena Logic (Prof. Ragazzini)",
+                        "module": "M4 - Factory Physics & Simulation",
+                        "duration_sec": 3569,
+                        "duration_formatted": "0h 59m",
+                        "duration_h": 0.99
+                  }
+            ]
       }
-    };
+};
 
     
     const SUPABASE_URL = 'https://cdcfcichrheumgfibgur.supabase.co';
