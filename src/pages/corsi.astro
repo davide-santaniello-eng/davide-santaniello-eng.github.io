@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polimi Management Engineering - Course Progress & Study Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(22, 28, 45, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(30, 41, 69, 0.85);
+      --accent-strategy: #38bdf8;
+      --accent-marketing: #ec4899;
+      --accent-afc: #8b5cf6;
+      --accent-success: #10b981;
+      --accent-warning: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --glass-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.05) 0px, transparent 60%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Course Switcher Bar */
+    .course-switcher-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .course-pills {
+      display: inline-flex;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--card-border);
+      padding: 0.35rem;
+      border-radius: 1rem;
+      gap: 0.35rem;
+    }
+
+    .course-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.6rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .course-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .course-btn.active {
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .course-btn[data-course="SM"].active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .course-btn[data-course="AFC"].active {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.35) 0%, rgba(56, 189, 248, 0.25) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1.5rem;
+    }
+
+    .header-title h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .header-title p {
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Target & Stats Planner Grid */
+    .planner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .card-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-value {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+    }
+
+    .card-value span.unit {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .card-sub {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+
+    /* Target Calculator Card */
+    .calculator-card {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(30, 41, 69, 0.7) 0%, rgba(22, 28, 45, 0.8) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .calculator-card {
+        grid-column: span 1;
+      }
+    }
+
+    .calc-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .date-input-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .date-input-wrap label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    input[type="date"] {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 0.65rem 0.9rem;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    input[type="date"]:focus {
+      border-color: var(--accent-strategy);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .calc-result-box {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 1rem;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .calc-result-val {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--accent-strategy);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Overall Progress Bar */
+    .progress-section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-strategy), #a855f7, var(--accent-marketing));
+      border-radius: 9999px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Controls & Filters Bar */
+    .filters-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--card-border);
+      padding: 0.3rem;
+      border-radius: 0.85rem;
+      gap: 0.25rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: #ffffff;
+    }
+
+    .tab-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Lessons List */
+    .lessons-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .lesson-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.15rem;
+      padding: 1.15rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .lesson-item:hover {
+      background: var(--card-hover);
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: translateY(-2px);
+    }
+
+    .lesson-item.completed {
+      background: rgba(16, 185, 129, 0.05);
+      border-color: rgba(16, 185, 129, 0.25);
+    }
+
+    .lesson-item.completed .lesson-title {
+      color: #cbd5e1;
+      text-decoration: line-through;
+      text-decoration-color: rgba(148, 163, 184, 0.4);
+    }
+
+    /* Custom Checkbox */
+    .checkbox-wrap {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .custom-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .lesson-item.completed .custom-checkbox {
+      background: var(--accent-success);
+      border-color: var(--accent-success);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+    }
+
+    .custom-checkbox svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .lesson-item.completed .custom-checkbox svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .lesson-order {
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-dim);
+      width: 28px;
+      flex-shrink: 0;
+    }
+
+    .module-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .module-pill.strategy {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-strategy);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .module-pill.marketing {
+      background: rgba(236, 72, 153, 0.12);
+      color: var(--accent-marketing);
+      border: 1px solid rgba(236, 72, 153, 0.3);
+    }
+
+    .module-pill.financial-accounting {
+      background: rgba(139, 92, 246, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .module-pill.financial-analysis {
+      background: rgba(14, 165, 233, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(14, 165, 233, 0.3);
+    }
+
+    .module-pill.cost-accounting {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .module-pill.management-control {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .module-pill.esercitazioni {
+      background: rgba(236, 72, 153, 0.15);
+      color: #f472b6;
+      border: 1px solid rgba(236, 72, 153, 0.3);
+    }
+
+    .lesson-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lesson-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.2rem;
+    }
+
+    .lesson-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lesson-duration {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    
+
+    
+
+    footer {
+      margin-top: 3.5rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--card-border);
+      padding-top: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .lesson-item {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        padding: 1rem;
+      }
+      .lesson-info {
+        width: 100%;
+        order: 3;
+      }
+      
+    }
+  
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      transform: translateX(-2px);
+    }
+    .cloud-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 9999px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #94a3b8;
+      display: inline-block;
+      transition: background 0.3s ease;
+    }
+    .status-dot.syncing {
+      background: #f59e0b;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+      animation: pulse 1s infinite alternate;
+    }
+    .status-dot.synced {
+      background: #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+    .status-dot.error {
+      background: #ef4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+    }
+    @keyframes pulse {
+      from { opacity: 0.5; }
+      to { opacity: 1; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Course Switcher & Header Bar -->
+    <div class="course-switcher-bar">
+      <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+        <a href="/" class="back-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          DS-LAB Hub
+        </a>
+        <div class="course-pills">
+          <button class="course-btn active" data-course="SM" onclick="switchCourse('SM')">
+            <span>🎯 Strategy & Marketing</span>
+          </button>
+          <button class="course-btn" data-course="AFC" onclick="switchCourse('AFC')">
+            <span>📊 Accounting, Finance & Control</span>
+          </button>
+        </div>
+      </div>
+      <div class="action-btns" style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+        <div class="cloud-status-pill" id="cloudStatusPill" title="Stato sincronizzazione Supabase">
+          <span class="status-dot" id="cloudStatusDot"></span>
+          <span id="cloudStatusText">Connessione Cloud...</span>
+        </div>
+        <input type="file" id="importFileInput" style="display: none;" accept=".json" onchange="handleImportFile(event)">
+        <button class="btn-secondary" onclick="document.getElementById('importFileInput').click()" title="Importa file di progresso JSON">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Importa
+        </button>
+        <button class="btn-secondary" onclick="exportState()" title="Scarica copia locale JSON">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Backup
+        </button>
+        <button class="btn-secondary" onclick="resetState()" title="Azzera le lezioni del corso attivo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/></svg>
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <header>
+      <div class="header-title">
+        <div class="badge-course" id="courseBadge">Politecnico di Milano • 10 CFU</div>
+        <h1 id="courseTitle">Strategy & Marketing 🎯</h1>
+        <p id="courseDesc">Interactive Course Progress Tracker & Exam Deadline Planner</p>
+      </div>
+    </header>
+
+    <!-- Top Stats & Calculator -->
+    <div class="planner-grid">
+      <!-- Target Calculator -->
+      <div class="card calculator-card">
+        <div class="card-label">
+          <span>Pianificatore Esame (Studio Giornaliero)</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="calc-row">
+          <div class="date-input-wrap">
+            <label for="targetDate">Data Obiettivo / Esame:</label>
+            <input type="date" id="targetDate" onchange="calculatePace()">
+          </div>
+          <div class="calc-result-box">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Ritmo di studio necessario:</div>
+            <div class="calc-result-val" id="paceVal">-- h/giorno</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim);" id="paceSub">Seleziona una data per il calcolo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ore Rimanenti -->
+      <div class="card">
+        <div class="card-label">Ore da Completare</div>
+        <div class="card-value" id="remainingHours">-- <span class="unit">ore</span></div>
+        <div class="card-sub" id="remainingSub">-- ore totali</div>
+      </div>
+
+      <!-- Percentuale & Lezioni -->
+      <div class="card">
+        <div class="card-label">Avanzamento Lezioni</div>
+        <div class="card-value" id="completedCount">0 <span class="unit">/ --</span></div>
+        <div class="card-sub" id="completedPct">0% completato</div>
+      </div>
+    </div>
+
+    <!-- Overall Progress Bar -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span style="font-size: 0.9rem; color: var(--text-muted);">Completamento Totale Corso</span>
+        <span style="font-size: 1.1rem; color: #ffffff;" id="progressLabel">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- Filters & List -->
+    <div class="filters-bar">
+      <div class="filter-tabs" id="filterTabsContainer"></div>
+      <div style="font-size: 0.85rem; color: var(--text-muted);" id="filterCountLabel">
+        Mostrando lezioni
+      </div>
+    </div>
+
+    <!-- Lessons Container -->
+    <div class="lessons-list" id="lessonsContainer"></div>
+
+    <footer>
+      Politecnico di Milano • Management Engineering • Progress Tracker & Lecture Hub.
+    </footer>
+  </div>
+
+  <script>
+    const COURSES_DATA = {
+      "SM": {
+        "id": "SM",
+        "name": "Strategy & Marketing 🎯",
+        "code": "S&M",
+        "badge": "Politecnico di Milano • 10 CFU",
+        "description": "Interactive Course Progress Tracker & Exam Deadline Planner",
+        "modules": ["Strategy", "Marketing"],
+        "lessons": [
+          {
+            "id": "lesson_01",
+            "order": 1,
+            "name": "Strategy - L00 - Introduction to the course",
+            "code": "L00",
+            "topic": "Introduction to the course",
+            "module": "Strategy",
+            "duration_sec": 7163,
+            "duration_formatted": "1h 59m",
+            "duration_h": 1.99
+          },
+          {
+            "id": "lesson_02",
+            "order": 2,
+            "name": "Strategy - L01 - Introduction to Strategy",
+            "code": "L01",
+            "topic": "Introduction to Strategy",
+            "module": "Strategy",
+            "duration_sec": 11691,
+            "duration_formatted": "3h 14m",
+            "duration_h": 3.25
+          },
+          {
+            "id": "lesson_03",
+            "order": 3,
+            "name": "Strategy - L02 & L03 - Corporate Strategy & External Analysis",
+            "code": "L02 & L03",
+            "topic": "Corporate Strategy & External Analysis",
+            "module": "Strategy",
+            "duration_sec": 5897,
+            "duration_formatted": "1h 38m",
+            "duration_h": 1.64
+          },
+          {
+            "id": "lesson_04",
+            "order": 4,
+            "name": "Strategy - L04 & L05 - Tesla Case Study + Business Strategy & Internal Analysis",
+            "code": "L04 & L05",
+            "topic": "Tesla Case Study + Business Strategy & Internal Analysis",
+            "module": "Strategy",
+            "duration_sec": 4398,
+            "duration_formatted": "1h 13m",
+            "duration_h": 1.22
+          },
+          {
+            "id": "lesson_05",
+            "order": 5,
+            "name": "Strategy - L05 & L06 - Internal Analysis & Strategy Formulation Process",
+            "code": "L05 & L06",
+            "topic": "Internal Analysis & Strategy Formulation Process",
+            "module": "Strategy",
+            "duration_sec": 9389,
+            "duration_formatted": "2h 36m",
+            "duration_h": 2.61
+          },
+          {
+            "id": "lesson_06",
+            "order": 6,
+            "name": "Strategy - L07 - Case Study Session",
+            "code": "L07",
+            "topic": "Case Study Session",
+            "module": "Strategy",
+            "duration_sec": 389,
+            "duration_formatted": "0h 06m",
+            "duration_h": 0.11
+          },
+          {
+            "id": "lesson_07",
+            "order": 7,
+            "name": "Strategy - L08 - Internationalization Strategy",
+            "code": "L08",
+            "topic": "Internationalization Strategy",
+            "module": "Strategy",
+            "duration_sec": 5584,
+            "duration_formatted": "1h 33m",
+            "duration_h": 1.55
+          },
+          {
+            "id": "lesson_08",
+            "order": 8,
+            "name": "Strategy - L09 - Disruptive Innovation",
+            "code": "L09",
+            "topic": "Disruptive Innovation",
+            "module": "Strategy",
+            "duration_sec": 3587,
+            "duration_formatted": "0h 59m",
+            "duration_h": 1.0
+          },
+          {
+            "id": "lesson_09",
+            "order": 9,
+            "name": "Strategy – L10 - Mergers & Acquisitions",
+            "code": "L10",
+            "topic": "Mergers & Acquisitions",
+            "module": "Strategy",
+            "duration_sec": 6669,
+            "duration_formatted": "1h 51m",
+            "duration_h": 1.85
+          },
+          {
+            "id": "lesson_10",
+            "order": 10,
+            "name": "Strategy – L10 - Entrepreneurial Strategy (part 1)",
+            "code": "L10 Pt. 1",
+            "topic": "Entrepreneurial Strategy (part 1)",
+            "module": "Strategy",
+            "duration_sec": 1597,
+            "duration_formatted": "0h 26m",
+            "duration_h": 0.44
+          },
+          {
+            "id": "lesson_11",
+            "order": 11,
+            "name": "Strategy – L11 - Blue Ocean Strategy",
+            "code": "L11",
+            "topic": "Blue Ocean Strategy",
+            "module": "Strategy",
+            "duration_sec": 4004,
+            "duration_formatted": "1h 06m",
+            "duration_h": 1.11
+          },
+          {
+            "id": "lesson_12",
+            "order": 12,
+            "name": "Strategy – L10 - Entrepreneurial Strategy (part 2) (copy)",
+            "code": "L10 Pt. 2",
+            "topic": "Entrepreneurial Strategy (part 2)",
+            "module": "Strategy",
+            "duration_sec": 3522,
+            "duration_formatted": "0h 58m",
+            "duration_h": 0.98
+          },
+          {
+            "id": "lesson_13",
+            "order": 13,
+            "name": "Marketing - L01 - Marketing Introduction & Demand",
+            "code": "L01",
+            "topic": "Marketing Introduction & Demand",
+            "module": "Marketing",
+            "duration_sec": 9649,
+            "duration_formatted": "2h 40m",
+            "duration_h": 2.68
+          },
+          {
+            "id": "lesson_14",
+            "order": 14,
+            "name": "Marketing - L02 - Segmentation",
+            "code": "L02",
+            "topic": "Segmentation",
+            "module": "Marketing",
+            "duration_sec": 10939,
+            "duration_formatted": "3h 02m",
+            "duration_h": 3.04
+          },
+          {
+            "id": "lesson_15",
+            "order": 15,
+            "name": "Marketing - L03 - Targeting & Positioning",
+            "code": "L03",
+            "topic": "Targeting & Positioning",
+            "module": "Marketing",
+            "duration_sec": 8216,
+            "duration_formatted": "2h 16m",
+            "duration_h": 2.28
+          },
+          {
+            "id": "lesson_16",
+            "order": 16,
+            "name": "Marketing - L04 - Marketing Mix Pt. 1",
+            "code": "L04",
+            "topic": "Marketing Mix Pt. 1",
+            "module": "Marketing",
+            "duration_sec": 11143,
+            "duration_formatted": "3h 05m",
+            "duration_h": 3.1
+          },
+          {
+            "id": "lesson_17",
+            "order": 17,
+            "name": "Marketing - L05 - Marketing Mix Pt. 2",
+            "code": "L05",
+            "topic": "Marketing Mix Pt. 2",
+            "module": "Marketing",
+            "duration_sec": 10901,
+            "duration_formatted": "3h 01m",
+            "duration_h": 3.03
+          },
+          {
+            "id": "lesson_18",
+            "order": 18,
+            "name": "Marketing - L06 - Marketing Mix Pt. 3_1",
+            "code": "L06.1",
+            "topic": "Marketing Mix Pt. 3_1",
+            "module": "Marketing",
+            "duration_sec": 712,
+            "duration_formatted": "0h 11m",
+            "duration_h": 0.2
+          },
+          {
+            "id": "lesson_19",
+            "order": 19,
+            "name": "Marketing - L06 - Marketing Mix Pt. 3_2",
+            "code": "L06.2",
+            "topic": "Marketing Mix Pt. 3_2",
+            "module": "Marketing",
+            "duration_sec": 5624,
+            "duration_formatted": "1h 33m",
+            "duration_h": 1.56
+          },
+          {
+            "id": "lesson_20",
+            "order": 20,
+            "name": "Marketing - L07 - New Trends and Media",
+            "code": "L07",
+            "topic": "New Trends and Media",
+            "module": "Marketing",
+            "duration_sec": 9674,
+            "duration_formatted": "2h 41m",
+            "duration_h": 2.69
+          }
+        ]
+      },
+      "AFC": {
+        "id": "AFC",
+        "name": "Accounting, Finance and Control 📊",
+        "code": "AFC",
+        "badge": "Politecnico di Milano • 10 CFU",
+        "description": "Financial Accounting, Ratios, Cash Flow & Management Control",
+        "modules": ["Financial Accounting", "Financial Analysis", "Cost Accounting", "Management Control", "Esercitazioni"],
+        "lessons": [
+          {
+            "id": "afc_lesson_01",
+            "order": 1,
+            "name": "AFC - L01 - Aims, Requirements & Accounting Fundamentals Recap",
+            "code": "L01",
+            "topic": "Aims, Requirements & Accounting Fundamentals Recap",
+            "module": "Financial Accounting",
+            "duration_sec": 8880,
+            "duration_formatted": "2h 28m",
+            "duration_h": 2.47
+          },
+          {
+            "id": "afc_lesson_02",
+            "order": 2,
+            "name": "AFC - L02 - Financial Statements Overview (Balance Sheet & Income Statement)",
+            "code": "L02",
+            "topic": "Financial Statements Overview (Balance Sheet & Income Statement)",
+            "module": "Financial Accounting",
+            "duration_sec": 8520,
+            "duration_formatted": "2h 22m",
+            "duration_h": 2.37
+          },
+          {
+            "id": "afc_lesson_03",
+            "order": 3,
+            "name": "AFC - L03 - Annual Reporting & Accounting Principles (IFRS-IAS)",
+            "code": "L03",
+            "topic": "Annual Reporting & Accounting Principles (IFRS-IAS)",
+            "module": "Financial Accounting",
+            "duration_sec": 5520,
+            "duration_formatted": "1h 32m",
+            "duration_h": 1.53
+          },
+          {
+            "id": "afc_lesson_04",
+            "order": 4,
+            "name": "AFC - L04 - Balance Sheet Deep Dive & Notes to Financial Statements",
+            "code": "L04",
+            "topic": "Balance Sheet Deep Dive & Notes to Financial Statements",
+            "module": "Financial Accounting",
+            "duration_sec": 8280,
+            "duration_formatted": "2h 18m",
+            "duration_h": 2.3
+          },
+          {
+            "id": "afc_lesson_05",
+            "order": 5,
+            "name": "AFC - L05 - Financial Statements Reclassification (Financial Criteria)",
+            "code": "L05",
+            "topic": "Financial Statements Reclassification (Financial Criteria)",
+            "module": "Financial Analysis",
+            "duration_sec": 4320,
+            "duration_formatted": "1h 12m",
+            "duration_h": 1.2
+          },
+          {
+            "id": "afc_lesson_06",
+            "order": 6,
+            "name": "AFC - L06 - Working Capital & Net Operating Working Capital (NOWC)",
+            "code": "L06",
+            "topic": "Working Capital & Net Operating Working Capital (NOWC)",
+            "module": "Financial Analysis",
+            "duration_sec": 4440,
+            "duration_formatted": "1h 14m",
+            "duration_h": 1.23
+          },
+          {
+            "id": "afc_lesson_07",
+            "order": 7,
+            "name": "AFC - L07 - Functional Reclassification & Net Invested Capital (NIC)",
+            "code": "L07",
+            "topic": "Functional Reclassification & Net Invested Capital (NIC)",
+            "module": "Financial Analysis",
+            "duration_sec": 6900,
+            "duration_formatted": "1h 55m",
+            "duration_h": 1.92
+          },
+          {
+            "id": "afc_lesson_08",
+            "order": 8,
+            "name": "AFC - L08 - Profitability Ratios & DuPont Analysis (ROE, ROI, ROS)",
+            "code": "L08",
+            "topic": "Profitability Ratios & DuPont Analysis (ROE, ROI, ROS)",
+            "module": "Financial Analysis",
+            "duration_sec": 6420,
+            "duration_formatted": "1h 47m",
+            "duration_h": 1.78
+          },
+          {
+            "id": "afc_lesson_09",
+            "order": 9,
+            "name": "AFC - L09 - Financial Leverage, Spread Effect & Debt Sustainability",
+            "code": "L09",
+            "topic": "Financial Leverage, Spread Effect & Debt Sustainability",
+            "module": "Financial Analysis",
+            "duration_sec": 5940,
+            "duration_formatted": "1h 39m",
+            "duration_h": 1.65
+          },
+          {
+            "id": "afc_lesson_10",
+            "order": 10,
+            "name": "AFC - L10 - Liquidity & Solvency Ratios (Current, Quick, Debt to Equity)",
+            "code": "L10",
+            "topic": "Liquidity & Solvency Ratios (Current, Quick, Debt to Equity)",
+            "module": "Financial Analysis",
+            "duration_sec": 6900,
+            "duration_formatted": "1h 55m",
+            "duration_h": 1.92
+          },
+          {
+            "id": "afc_lesson_11",
+            "order": 11,
+            "name": "AFC - L11 - Eni Case Study - Financial Ratio Analysis in Practice",
+            "code": "L11",
+            "topic": "Eni Case Study - Financial Ratio Analysis in Practice",
+            "module": "Financial Analysis",
+            "duration_sec": 4440,
+            "duration_formatted": "1h 14m",
+            "duration_h": 1.23
+          },
+          {
+            "id": "afc_lesson_12",
+            "order": 12,
+            "name": "AFC - L12 - Cash Flow Statement (OFCF & Cash Generation)",
+            "code": "L12",
+            "topic": "Cash Flow Statement (OFCF & Cash Generation)",
+            "module": "Financial Analysis",
+            "duration_sec": 7260,
+            "duration_formatted": "2h 01m",
+            "duration_h": 2.02
+          },
+          {
+            "id": "afc_lesson_13",
+            "order": 13,
+            "name": "AFC - L13 - Introduction to Management Control Systems (MCS)",
+            "code": "L13",
+            "topic": "Introduction to Management Control Systems (MCS)",
+            "module": "Management Control",
+            "duration_sec": 6900,
+            "duration_formatted": "1h 55m",
+            "duration_h": 1.92
+          },
+          {
+            "id": "afc_lesson_14",
+            "order": 14,
+            "name": "AFC - L14 - Cost Classification, Direct vs Indirect, Variable vs Fixed",
+            "code": "L14",
+            "topic": "Cost Classification, Direct vs Indirect, Variable vs Fixed",
+            "module": "Cost Accounting",
+            "duration_sec": 4980,
+            "duration_formatted": "1h 23m",
+            "duration_h": 1.38
+          },
+          {
+            "id": "afc_lesson_15",
+            "order": 15,
+            "name": "AFC - L15 - Break-Even Analysis, Operating Leverage & Cost Centers",
+            "code": "L15",
+            "topic": "Break-Even Analysis, Operating Leverage & Cost Centers",
+            "module": "Cost Accounting",
+            "duration_sec": 7320,
+            "duration_formatted": "2h 02m",
+            "duration_h": 2.03
+          },
+          {
+            "id": "afc_lesson_16",
+            "order": 16,
+            "name": "AFC - L16 - Activity-Based Costing (ABC) & Cost Allocation Systems",
+            "code": "L16",
+            "topic": "Activity-Based Costing (ABC) & Cost Allocation Systems",
+            "module": "Cost Accounting",
+            "duration_sec": 7740,
+            "duration_formatted": "2h 09m",
+            "duration_h": 2.15
+          },
+          {
+            "id": "afc_lesson_17",
+            "order": 17,
+            "name": "AFC - L17 - Transfer Pricing Policies & Responsibility Centers",
+            "code": "L17",
+            "topic": "Transfer Pricing Policies & Responsibility Centers",
+            "module": "Management Control",
+            "duration_sec": 6960,
+            "duration_formatted": "1h 56m",
+            "duration_h": 1.93
+          },
+          {
+            "id": "afc_lesson_18",
+            "order": 18,
+            "name": "AFC - L18 - Budgeting, Master Budget & Variance Analysis Wrap-up",
+            "code": "L18",
+            "topic": "Budgeting, Master Budget & Variance Analysis Wrap-up",
+            "module": "Management Control",
+            "duration_sec": 4020,
+            "duration_formatted": "1h 07m",
+            "duration_h": 1.12
+          },
+          {
+            "id": "afc_es_01",
+            "order": 19,
+            "name": "AFC - Esercitazione 1 - Financial Statements & Ratios",
+            "code": "ES01",
+            "topic": "Esercitazione 1 - Bilancio, Riclassificazione e Indici",
+            "module": "Esercitazioni",
+            "duration_sec": 13000,
+            "duration_formatted": "3h 36m",
+            "duration_h": 3.61
+          }
+        ]
+      }
+    };
+
+    
+    const SUPABASE_URL = 'https://cdcfcichrheumgfibgur.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_8GZ9RM14uxyfkSW-2cI64w_AbwmqE06';
+    let supabaseClient = null;
+
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+
+    function setCloudStatus(status, text) {
+      const dot = document.getElementById('cloudStatusDot');
+      const label = document.getElementById('cloudStatusText');
+      if (!dot || !label) return;
+
+      dot.className = 'status-dot';
+      if (status === 'syncing') {
+        dot.classList.add('syncing');
+        label.textContent = text || 'Salvataggio cloud...';
+      } else if (status === 'synced') {
+        dot.classList.add('synced');
+        label.textContent = text || 'Cloud sincronizzato';
+      } else if (status === 'error') {
+        dot.classList.add('error');
+        label.textContent = text || 'Offline / Errore sync';
+      } else {
+        label.textContent = text || 'Pronto';
+      }
+    }
+
+    const DEFAULT_PRELOADS = {
+      'SM': {
+        completed: ["lesson_13", "lesson_14", "lesson_15", "lesson_16", "lesson_17", "lesson_18"],
+        targetDate: "2026-11-16"
+      }
+    };
+
+    let currentCourseId = localStorage.getItem('polimi_selected_course_v1') || 'SM';
+    let currentFilter = 'all';
+    let saveTimeout = null;
+
+    function getStorageKey() {
+      return `course_progress_${currentCourseId}_v1`;
+    }
+
+    function getTargetDateKey() {
+      return `course_target_date_${currentCourseId}_v1`;
+    }
+
+    function getCompletedSet() {
+      return new Set(JSON.parse(localStorage.getItem(getStorageKey()) || '[]'));
+    }
+
+    async function syncFromCloud(courseId) {
+      if (!supabaseClient) {
+        setCloudStatus('error', 'Offline');
+        return;
+      }
+      setCloudStatus('syncing', 'Controllo cloud...');
+      try {
+        const { data, error } = await supabaseClient
+          .from('study_progress')
+          .select('*')
+          .eq('course_id', courseId)
+          .maybeSingle();
+
+        if (error) {
+          console.warn('Errore lettura Supabase:', error);
+          setCloudStatus('error', 'Errore cloud (tabella?)');
+          return;
+        }
+
+        if (data && data.completed_lessons) {
+          localStorage.setItem(getStorageKey(), JSON.stringify(data.completed_lessons));
+          if (data.target_date) {
+            localStorage.setItem(getTargetDateKey(), data.target_date);
+          }
+          renderLessons();
+          updateStats();
+          loadTargetDate();
+          calculatePace();
+          setCloudStatus('synced', 'Cloud sincronizzato');
+        } else {
+          const localStored = localStorage.getItem(getStorageKey());
+          let completedList = localStored ? JSON.parse(localStored) : null;
+          let targetVal = localStorage.getItem(getTargetDateKey()) || '';
+
+          if (!completedList && DEFAULT_PRELOADS[courseId]) {
+            completedList = DEFAULT_PRELOADS[courseId].completed;
+            targetVal = DEFAULT_PRELOADS[courseId].targetDate;
+            localStorage.setItem(getStorageKey(), JSON.stringify(completedList));
+            if (targetVal) localStorage.setItem(getTargetDateKey(), targetVal);
+            renderLessons();
+            updateStats();
+            loadTargetDate();
+            calculatePace();
+          }
+
+          if (completedList) {
+            await syncToCloud(courseId, completedList, targetVal);
+          } else {
+            setCloudStatus('synced', 'Cloud pronto');
+          }
+        }
+      } catch (e) {
+        console.error('Eccezione syncFromCloud:', e);
+        setCloudStatus('error', 'Errore connessione');
+      }
+    }
+
+    async function syncToCloud(courseId, completedList, targetDate) {
+      if (!supabaseClient) {
+        setCloudStatus('error', 'Offline');
+        return;
+      }
+      setCloudStatus('syncing', 'Salvataggio...');
+      try {
+        const payload = {
+          course_id: courseId,
+          completed_lessons: completedList !== undefined ? completedList : [...getCompletedSet()],
+          target_date: targetDate !== undefined ? targetDate : (localStorage.getItem(getTargetDateKey()) || ''),
+          updated_at: new Date().toISOString()
+        };
+        const { error } = await supabaseClient
+          .from('study_progress')
+          .upsert(payload, { onConflict: 'course_id' });
+
+        if (error) {
+          console.warn('Errore salvataggio Supabase:', error);
+          setCloudStatus('error', 'Errore salvataggio');
+        } else {
+          setCloudStatus('synced', 'Cloud sincronizzato');
+        }
+      } catch (e) {
+        console.error('Eccezione syncToCloud:', e);
+        setCloudStatus('error', 'Errore sync');
+      }
+    }
+
+    function queueCloudSave() {
+      clearTimeout(saveTimeout);
+      setCloudStatus('syncing', 'In attesa...');
+      saveTimeout = setTimeout(() => {
+        syncToCloud(currentCourseId);
+      }, 500);
+    }
+
+    function switchCourse(courseId) {
+      if (!COURSES_DATA[courseId]) return;
+      currentCourseId = courseId;
+      localStorage.setItem('polimi_selected_course_v1', courseId);
+      currentFilter = 'all';
+
+      document.querySelectorAll('.course-btn').forEach(btn => {
+        if (btn.getAttribute('data-course') === courseId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      renderCourseHeader();
+      renderFilterTabs();
+      loadTargetDate();
+      renderLessons();
+      updateStats();
+      calculatePace();
+      syncFromCloud(courseId);
+    }
+
+    function renderCourseHeader() {
+      const c = COURSES_DATA[currentCourseId];
+      document.getElementById('courseBadge').textContent = c.badge;
+      document.getElementById('courseTitle').textContent = c.name;
+      document.getElementById('courseDesc').textContent = c.description;
+    }
+
+    function renderFilterTabs() {
+      const c = COURSES_DATA[currentCourseId];
+      const container = document.getElementById('filterTabsContainer');
+      
+      let html = `<button class="tab-btn active" onclick="setFilter('all', this)">Tutte (${c.lessons.length})</button>`;
+      
+      c.modules.forEach(m => {
+        const count = c.lessons.filter(l => l.module === m).length;
+        html += `<button class="tab-btn" onclick="setFilter('${m}', this)">${m} (${count})</button>`;
+      });
+
+      html += `
+        <button class="tab-btn" onclick="setFilter('todo', this)">Da Fare</button>
+        <button class="tab-btn" onclick="setFilter('done', this)">Completate</button>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function loadTargetDate() {
+      const savedDate = localStorage.getItem(getTargetDateKey());
+      const dateInput = document.getElementById('targetDate');
+      if (savedDate) {
+        dateInput.value = savedDate;
+      } else {
+        const d = new Date();
+        d.setDate(d.getDate() + 14);
+        dateInput.value = d.toISOString().split('T')[0];
+      }
+    }
+
+    function toggleLesson(id) {
+      const completedSet = getCompletedSet();
+      if (completedSet.has(id)) {
+        completedSet.delete(id);
+      } else {
+        completedSet.add(id);
+      }
+      localStorage.setItem(getStorageKey(), JSON.stringify([...completedSet]));
+      renderLessons();
+      updateStats();
+      calculatePace();
+      queueCloudSave();
+    }
+
+    function updateStats() {
+      const c = COURSES_DATA[currentCourseId];
+      const completedSet = getCompletedSet();
+      const totalSec = c.lessons.reduce((acc, cur) => acc + cur.duration_sec, 0);
+      const doneSec = c.lessons.filter(l => completedSet.has(l.id)).reduce((acc, cur) => acc + cur.duration_sec, 0);
+      const remSec = Math.max(0, totalSec - doneSec);
+
+      const remH = (remSec / 3600).toFixed(1);
+      const doneH = (doneSec / 3600).toFixed(1);
+      const totalH = (totalSec / 3600).toFixed(1);
+
+      const doneCount = completedSet.size;
+      const pct = Math.round((doneSec / totalSec) * 100);
+
+      document.getElementById('remainingHours').innerHTML = `${remH} <span class="unit">ore</span>`;
+      document.getElementById('remainingSub').textContent = `su ${totalH}h totali (${formatHoursAndMins(remSec)} rimanenti)`;
+      
+      document.getElementById('completedCount').innerHTML = `${doneCount} <span class="unit">/ ${c.lessons.length}</span>`;
+      document.getElementById('completedPct').textContent = `${pct}% del corso completato`;
+
+      document.getElementById('progressFill').style.width = `${pct}%`;
+      document.getElementById('progressLabel').textContent = `${pct}% (${doneH}h / ${totalH}h)`;
+    }
+
+    function calculatePace() {
+      const dateInput = document.getElementById('targetDate');
+      const targetVal = dateInput.value;
+      if (!targetVal) {
+        document.getElementById('paceVal').textContent = '-- h/giorno';
+        document.getElementById('paceSub').textContent = 'Seleziona una data per il calcolo';
+        return;
+      }
+
+      if (localStorage.getItem(getTargetDateKey()) !== targetVal) {
+        localStorage.setItem(getTargetDateKey(), targetVal);
+        queueCloudSave();
+      }
+
+      const now = new Date();
+      now.setHours(0, 0, 0, 0);
+      const target = new Date(targetVal);
+      target.setHours(0, 0, 0, 0);
+
+      const diffTime = target - now;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      const c = COURSES_DATA[currentCourseId];
+      const completedSet = getCompletedSet();
+      const totalSec = c.lessons.reduce((acc, cur) => acc + cur.duration_sec, 0);
+      const doneSec = c.lessons.filter(l => completedSet.has(l.id)).reduce((acc, cur) => acc + cur.duration_sec, 0);
+      const remSec = Math.max(0, totalSec - doneSec);
+      const remH = remSec / 3600;
+
+      if (diffDays <= 0) {
+        if (remSec === 0) {
+          document.getElementById('paceVal').textContent = 'Finito! 🎉';
+          document.getElementById('paceSub').textContent = 'Tutte le lezioni completate!';
+        } else {
+          document.getElementById('paceVal').textContent = `${remH.toFixed(1)} h oggi`;
+          document.getElementById('paceSub').textContent = 'La scadenza è oggi o passata!';
+        }
+        return;
+      }
+
+      if (remSec === 0) {
+        document.getElementById('paceVal').textContent = '0.0 h/giorno';
+        document.getElementById('paceSub').textContent = 'Ottimo lavoro! Corso completato al 100%';
+        return;
+      }
+
+      const hoursPerDay = (remH / diffDays).toFixed(1);
+      const minsPerDay = Math.round((remH / diffDays) * 60);
+
+      document.getElementById('paceVal').textContent = `${hoursPerDay} h/giorno`;
+      document.getElementById('paceSub').textContent = `equivalenti a ~${minsPerDay} min/giorno su ${diffDays} giorni rimasti`;
+    }
+
+    function formatHoursAndMins(sec) {
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      return `${h}h ${m}m`;
+    }
+
+    function setFilter(filter, el) {
+      currentFilter = filter;
+      document.querySelectorAll('#filterTabsContainer .tab-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderLessons();
+    }
+
+    function renderLessons() {
+      const c = COURSES_DATA[currentCourseId];
+      const completedSet = getCompletedSet();
+      const container = document.getElementById('lessonsContainer');
+
+      let filtered = c.lessons.filter(l => {
+        const isDone = completedSet.has(l.id);
+        if (currentFilter === 'todo') return !isDone;
+        if (currentFilter === 'done') return isDone;
+        if (currentFilter !== 'all') return l.module === currentFilter;
+        return true;
+      });
+
+      document.getElementById('filterCountLabel').textContent = `Mostrando ${filtered.length} di ${c.lessons.length} lezioni`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3rem; color: var(--text-dim); background: var(--card-bg); border-radius: 1rem; border: 1px dashed var(--card-border);">
+            Nessuna lezione trovata con il filtro selezionato.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(l => {
+        const isDone = completedSet.has(l.id);
+        const moduleClass = l.module.toLowerCase().replace(/[^a-z0-9]/g, '-');
+
+        return `
+          <div class="lesson-item ${isDone ? 'completed' : ''}" onclick="toggleLesson('${l.id}')">
+            <div class="checkbox-wrap" onclick="event.stopPropagation(); toggleLesson('${l.id}')">
+              <div class="custom-checkbox">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+            
+            <div class="lesson-order">#${String(l.order).padStart(2, '0')}</div>
+            <div class="module-pill ${moduleClass}">${l.module} • ${l.code}</div>
+            
+            <div class="lesson-info">
+              <div class="lesson-title">${l.topic}</div>
+              <div class="lesson-meta">
+                <span class="lesson-duration">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  ${l.duration_formatted}
+                </span>
+                <span style="color: var(--text-dim);">${l.name}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function exportState() {
+      const data = {
+        course: currentCourseId,
+        completed: [...getCompletedSet()],
+        targetDate: localStorage.getItem(getTargetDateKey()) || '',
+        exportedAt: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${currentCourseId.toLowerCase()}_study_progress.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function handleImportFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data && Array.isArray(data.completed)) {
+            const course = data.course || currentCourseId;
+            if (course !== currentCourseId && COURSES_DATA[course]) {
+              currentCourseId = course;
+            }
+            localStorage.setItem(getStorageKey(), JSON.stringify(data.completed));
+            if (data.targetDate) {
+              localStorage.setItem(getTargetDateKey(), data.targetDate);
+            }
+            renderLessons();
+            updateStats();
+            loadTargetDate();
+            calculatePace();
+            await syncToCloud(currentCourseId, data.completed, data.targetDate || '');
+            alert('Progressi importati e sincronizzati su Supabase con successo!');
+          } else {
+            alert('Formato file JSON non valido.');
+          }
+        } catch (err) {
+          alert('Errore lettura JSON: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    async function resetState() {
+      if (confirm(`Sei sicuro di voler resettare i progressi per il corso ${COURSES_DATA[currentCourseId].name}?`)) {
+        localStorage.removeItem(getStorageKey());
+        renderLessons();
+        updateStats();
+        calculatePace();
+        await syncToCloud(currentCourseId, [], localStorage.getItem(getTargetDateKey()) || '');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      switchCourse(currentCourseId);
+    });
+
+  </script>
+</body>
+</html>
