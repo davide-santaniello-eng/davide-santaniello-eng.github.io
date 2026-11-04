@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fire-toolkit-v1';
+const CACHE_NAME = 'fire-toolkit-v2';
 const ASSETS_TO_CACHE = [
   '/schede/',
   '/schede/index.html',
